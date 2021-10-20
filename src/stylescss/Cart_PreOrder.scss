@@ -61,13 +61,39 @@
     text-align: center;
     margin: 0 auto;
   }
+
+  .icons,
+  .arrow {
+    font-size: 80px;
+    color: var(--Primary-color);
+  }
+
+  .second,
+  .third {
+    color: var(--Process-hide-color);
+  }
+
   .FinishInfo,
   .EditInfo {
     opacity: 0.3;
   }
 
+  h3 {
+    font-size: var(--Button-font-size);
+    font-family: var(--Font-Family);
+    color: var(--Third-color);
+    text-align: center;
+    padding: 20px 0px;
+    font-weight: var(--Second-Font-Weight);
+  }
+
   @include mobile() {
     margin: 80px auto;
+
+    .icons {
+      font-size: 40px;
+      color: var(--Primary-color);
+    }
 
     h3 {
       text-align: center;
@@ -318,7 +344,7 @@
     h4 {
       display: none;
     }
-  };
+  }
 }
 
 /* 結帳與返回按鈕 */
@@ -366,4 +392,4 @@
     font-size: var(--Order-button-size-mobile);
     padding: var(--button-padding);
   }
-};
+} ;

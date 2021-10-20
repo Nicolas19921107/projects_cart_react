@@ -1,9 +1,14 @@
 import React from 'react'
-import { BsCart3 } from 'react-icons/bs'
-import { BsArrowRight } from 'react-icons/bs'
-import { BsFillTrashFill } from 'react-icons/bs'
-import { BsPlusCircle } from 'react-icons/bs'
-import { BsDashCircle } from 'react-icons/bs'
+import {
+  FaShoppingCart,
+  FaArrowRight,
+  FaTrash,
+  FaPlusCircle,
+  FaMinusCircle,
+  FaRegEdit,
+  FaCheck,
+} from 'react-icons/fa'
+
 import product1 from '../image/image 94.png'
 import product2 from '../image/image 95.png'
 import product3 from '../image/image 96.png'
@@ -22,18 +27,18 @@ function Cart_PreOrder(props) {
 
       <div className="Process col-lg-8 col-xs-6 d-flex justify-content-around align-content-end">
         <div className="CartImage col-lg-3 col-xs-1">
-          <BsCart3 fontSize="3.1rem" />
-          <h3>確認購物車</h3>
+          <FaShoppingCart className="icons" />
+          <h3 className="first">確認購物車</h3>
         </div>
-        <BsArrowRight fontSize="3.1rem" />
+        <FaArrowRight className="arrow first" />
         <div className="EditInfo col-lg-3 col-xs-1">
-          <BsCart3 fontSize="3.1rem" />
-          <h3>填寫資料</h3>
+          <FaRegEdit className="icons second" />
+          <h3 className="second">填寫資料</h3>
         </div>
-        <BsArrowRight fontSize="3.1rem" />
+        <FaArrowRight className="arrow second" />
         <div className="FinishInfo col-lg-3 col-xs-1">
-          <BsCart3 fontSize="3.1rem" />
-          <h3>完成訂單</h3>
+          <FaCheck className="icons third" />
+          <h3 className="third">完成訂單</h3>
         </div>
       </div>
 
@@ -63,12 +68,12 @@ function Cart_PreOrder(props) {
                 <td className="text-start">Optimum Nutrition 100% 乳清蛋白</td>
                 <td className="text-start">- 50P</td>
                 <td className="text-start">
-                  <BsDashCircle />2
-                  <BsPlusCircle />
+                  <FaMinusCircle />2
+                  <FaPlusCircle />
                 </td>
                 <td className="text-start">2000</td>
                 <td>
-                  <BsFillTrashFill color="#FB6107" />
+                  <FaTrash />
                 </td>
               </tr>
               <tr>
@@ -78,12 +83,12 @@ function Cart_PreOrder(props) {
                 <td className="text-start">名富米酒(保)</td>
                 <td className="text-start">- 50P</td>
                 <td className="text-start">
-                  <BsDashCircle />2
-                  <BsPlusCircle />
+                  <FaMinusCircle />2
+                  <FaPlusCircle />
                 </td>
                 <td className="text-start">354</td>
                 <td>
-                  <BsFillTrashFill color="#FB6107" />
+                  <FaTrash />
                 </td>
               </tr>
               <tr>
@@ -93,12 +98,12 @@ function Cart_PreOrder(props) {
                 <td className="text-start">奧利塔冷壓純橄欖油 1L</td>
                 <td className="text-start">- 50P</td>
                 <td className="text-start">
-                  <BsDashCircle />2
-                  <BsPlusCircle />
+                  <FaMinusCircle />2
+                  <FaPlusCircle />
                 </td>
                 <td className="text-start">354</td>
                 <td>
-                  <BsFillTrashFill color="#FB6107" />
+                  <FaTrash />
                 </td>
               </tr>
             </tbody>
