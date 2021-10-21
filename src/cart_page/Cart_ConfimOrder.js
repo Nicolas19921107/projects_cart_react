@@ -1,29 +1,51 @@
 import React from 'react'
-import Banner from '../Cart_components/Banner'
-import ProcessChart from '../Cart_components/ProcessChart'
-import SectionTitle from '../Cart_components/SectionTitle'
-import OrderDetailTitle from '../Cart_components/OrderDetailTitle'
 import Cart_OrderDetail from '../Cart_components/Manage/Cart_OrderDetail'
-import Cart_Button from '../Cart_components/Cart_Button'
 import { FaCcVisa } from 'react-icons/fa'
+import {
+  FaShoppingCart,
+  FaLongArrowAltRight,
+  FaRegEdit,
+  FaCheck,
+} from 'react-icons/fa'
+
 function Cart_ConfimOrder(props) {
   return (
     <>
-      <Banner />
-      <ProcessChart />
-      <SectionTitle />
-
-      <div className="container col-lg-6 col-10">
-        <OrderDetailTitle />
-
-        <div className="orderdetail">
-          <div className="detail col-lg-11 col-12 mx-auto mt-3">
-            <Cart_OrderDetail />
-          </div>
+      <div className="container-fluid Banner col-xs-10">
+        <div className="bannerTitle col-lg-8 col-xs-8 ">
+          <h1 className="bannerTitle1 col-xs-6">只差一步</h1>
+          <h1 className="bannerTitle2 col-xs-6">眼前所及全部歸你</h1>
         </div>
       </div>
 
-      <SectionTitle />
+      <div className="Process col-lg-8 col-xs-6 d-flex justify-content-around align-content-end">
+        <div className="CartImage col-lg-3 col-xs-1">
+          <FaShoppingCart className="icons first" />
+          <h3 className="first">確認購物車</h3>
+        </div>
+        <FaLongArrowAltRight className="arrow firstArrow" />
+        <div className="EditInfo col-lg-3 col-xs-1">
+          <FaRegEdit className="icons second" />
+          <h3 className="second">填寫資料</h3>
+        </div>
+        <FaLongArrowAltRight className="arrow secondArrow" />
+        <div className="FinishInfo col-lg-3 col-xs-1">
+          <FaCheck className="icons third" />
+          <h3 className="third">完成訂單</h3>
+        </div>
+      </div>
+
+      <div class="titleBorder col-lg-6 col-10">
+        <h4 class="res-title title-fz fw-700">確認訂單資訊</h4>
+      </div>
+
+
+      <Cart_OrderDetail />
+
+
+      <div class="titleBorder col-lg-6 col-10">
+        <h4 class="res-title title-fz fw-700">付款與運送方式</h4>
+      </div>
 
       <div className="container confirmorderdetail mx-auto col-lg-6 col-10">
         <div className="container importinfo d-flex justify-content-between">
@@ -83,11 +105,15 @@ function Cart_ConfimOrder(props) {
         </table>
       </div>
 
+      
       <div class="container confirmorderdetail mx-auto text-center">
         <h1>準備完成你的訂單了嗎?</h1>
       </div>
 
-      <Cart_Button />
+      <div class="container col-lg-7 col-12 confirm my-5 d-lg-flex text-center justify-content-around">
+        <button class="returninfo col-lg-4 col-10">返回</button>
+        <button class="confirminfo col-lg-4 col-10">送出訂單</button>
+      </div>
     </>
   )
 }

@@ -21,6 +21,16 @@
   .icons,
   .arrow {
     font-size: 80px;
+    opacity: 0.3;
+  }
+
+  .first,
+  .second,
+  .third,
+  .firstArrow,
+  .secondArrow {
+    opacity: 1;
+    color: var(--Primary-color);
   }
 
   h3 {
@@ -30,6 +40,7 @@
     text-align: center;
     padding: 20px 0px;
     font-weight: var(--Second-Font-Weight);
+    opacity: 0.3;
   }
 
   @include mobile() {

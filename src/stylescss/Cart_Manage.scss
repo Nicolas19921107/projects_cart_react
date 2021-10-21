@@ -108,6 +108,7 @@
     td {
       font-size: var(--Order-list-content-size);
       font-family: var(--Font-Family);
+      vertical-align: middle;
     }
     @include mobile() {
       display: none;
@@ -208,6 +209,209 @@
   }
 }
 
+/* 711取貨資料 */
+.store_711 {
+  h4 {
+    font-family: var(--Font-Family);
+    font-size: var(--Order-list-title-size);
+    font-weight: var(--Second-Font-Weight);
+    color: var(--Third-color);
+    margin: 20px auto;
+  }
+  .storeform {
+    label {
+      color: var(--Third-color);
+      font-family: var(--Font-Family);
+      font-weight: var(--Second-Font-Weight);
+      margin: 20px auto;
+    }
+    button {
+      width: 100%;
+      border-radius: 50px;
+      border: transparent;
+      height: 50px;
+      background-color: #f5f4f2;
+      margin-bottom: 20px;
+    }
+    span {
+      color: #ff0000;
+      font-family: var(--Font-English-Family);
+    }
+    .dropdown {
+      select {
+        width: 100%;
+        border-radius: 50px;
+        border: transparent;
+        height: 50px;
+        background-color: #f5f4f2;
+        margin-bottom: 20px;
+        padding: 0 20px;
+
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+      .ChevronDown {
+        font-size: 25px;
+        color: var(--Primary-color);
+        top: 20%;
+        left: 92%;
+      }
+    }
+    .storeinput {
+      input {
+        width: 100%;
+        border-radius: 50px;
+        border: transparent;
+        height: 50px;
+        background-color: #f5f4f2;
+        margin-bottom: 20px;
+      }
+    }
+  }
+  @include mobile() {
+    .store_711_image {
+      img {
+        width: 60px;
+      }
+    }
+
+    .store_711_info h4,
+    .store_711_address h4 {
+      font-size: var(--Font-7-11-font-size-mobile);
+    }
+    .storeform {
+      .dropdown {
+        .ChevronDown {
+          left: 82%;
+        }
+      }
+    }
+  }
+}
+
+/* 信用卡資料 */
+.creditcard {
+  label {
+    display: block;
+    color: var(--Third-color);
+    font-family: var(--Font-Family);
+    font-weight: var(--Second-Font-Weight);
+    margin: 20px auto;
+  }
+  .creditcard_number {
+    input {
+      width: 22%;
+      border-radius: 50px;
+      border: transparent;
+      height: 50px;
+      background-color: #f5f4f2;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+  .creditcard_duedate {
+    input {
+      width: 45%;
+      border-radius: 50px;
+      border: transparent;
+      height: 50px;
+      background-color: #f5f4f2;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .star {
+      color: #ff0000;
+      font-family: var(--Font-English-Family);
+    }
+    span {
+      font-size: var(--Order-list-title-size);
+      color: var(--Third-color);
+    }
+  }
+  .creditcard_duedate ::placeholder {
+    color: var(--Third-color);
+    font-size: var(--Order-list-title-size);
+    font-weight: var(--Second-Font-Weight);
+    font-family: var(--Font-English-Family);
+  }
+
+  .creditcard_checkcode {
+    label {
+      display: block;
+      color: var(--Third-color);
+      font-family: var(--Font-Family);
+      font-weight: var(--Second-Font-Weight);
+      margin: 20px auto;
+    }
+    input {
+      width: 100%;
+      border-radius: 50px;
+      border: transparent;
+      height: 50px;
+      background-color: #f5f4f2;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+  .creditcard_checkcode ::placeholder {
+    color: var(--Third-color);
+    font-size: var(--Order-list-title-size);
+    font-weight: var(--Second-Font-Weight);
+    font-family: var(--Font-English-Family);
+  }
+  .warning_text h6 {
+    color: var(--Primary-color);
+    font-size: var(--Order-list-title-size);
+    font-weight: var(--Second-Font-Weight);
+    font-family: var(--Font-Family);
+  }
+  span {
+    font-size: var(--Order-list-title-size);
+    color: var(--Third-color);
+  }
+
+  .star {
+    color: #ff0000;
+    font-family: var(--Font-English-Family);
+  }
+  @include mobile() {
+    .creditcard_number {
+      input {
+        width: 20%;
+        height: 30px;
+      }
+      span {
+        display: none;
+      }
+      .star {
+        display: inline;
+      }
+    }
+
+    .creditcard_duedate {
+      input {
+        width: 40%;
+        height: 30px;
+      }
+    }
+
+    .creditcard_checkcode {
+      input {
+        width: 100%;
+        border-radius: 30px;
+        height: 30px;
+      }
+    }
+
+    .warning_text {
+      h6 {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
 /* 訂購人資料 - 收件人/匯入會員 */
 .importinfo {
   h2 {
@@ -253,6 +457,7 @@
       height: 50px;
       background-color: #f5f4f2;
       margin-bottom: 20px;
+      padding: 0 20px;
     }
   }
   span {
@@ -365,5 +570,3 @@
     margin: 20px auto;
   }
 }
-
-

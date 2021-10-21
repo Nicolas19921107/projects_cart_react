@@ -3,6 +3,26 @@ import React from 'react'
 function Cart_OrderInfoInput(props) {
   return (
     <>
+      <div
+        className="
+        container
+        importinfo
+        d-flex
+        justify-content-lg-between
+        justify-content-sm-center
+        col-lg-6 col-10
+        mb-5
+      "
+      >
+        <h2>收件人資訊</h2>
+        <button
+          className="import col-lg-3 col-10"
+          onclick="importMember(event)"
+        >
+          匯入會員資料
+        </button>
+      </div>
+
       <form className="container col-lg-6 col-10 orderform" action="">
         <div className="order">
           <label for="">
