@@ -6,108 +6,20 @@
   }
 }
 
-/* Banner */
-.Banner {
-  background-image: url(../image/AdobeStock_211879671.jpeg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: 300px;
+// .Process {
+//   .first, .firstArrow {
+//     color: var(--Primary-color);
+//   }
+//   .second,
+//   .third {
+//     color: var(--Process-hide-color);
+//   }
 
-  .bannerTitle {
-    padding: 80px 60px;
-
-    .bannerTitle1 {
-      font-size: var(--Banner-font-size);
-      color: var(--Second-color);
-      margin: 0px auto;
-      font-weight: var(--Second-Font-Weight);
-      font-family: var(--Font-Family);
-    }
-
-    .bannerTitle2 {
-      text-indent: 2em;
-      font-size: var(--Banner-font-size);
-      font-weight: var(--Second-Font-Weight);
-      font-family: var(--Font-Family);
-      margin: 0px auto 40px;
-      color: var(--Third-color);
-    }
-  }
-
-  @include mobile() {
-    // Banner
-    .bannerTitle {
-      padding: 80px 0px;
-
-      .bannerTitle1 {
-        font-size: var(--Font-banner-size-mobile);
-      }
-      .bannerTitle2 {
-        font-size: var(--Font-banner-size-mobile);
-      }
-    }
-  }
-}
-
-/* 流程圖示 */
-.Process {
-  margin: 80px auto;
-
-  /* 流程圖狀態 */
-  .FinishInfo,
-  .CartImage,
-  .EditInfo {
-    text-align: center;
-    margin: 0 auto;
-  }
-
-  .icons,
-  .arrow {
-    font-size: 80px;
-    color: var(--Primary-color);
-  }
-
-  .second,
-  .third {
-    color: var(--Process-hide-color);
-  }
-
-  .FinishInfo,
-  .EditInfo {
-    opacity: 0.3;
-  }
-
-  h3 {
-    font-size: var(--Button-font-size);
-    font-family: var(--Font-Family);
-    color: var(--Third-color);
-    text-align: center;
-    padding: 20px 0px;
-    font-weight: var(--Second-Font-Weight);
-  }
-
-  @include mobile() {
-    margin: 80px auto;
-
-    .icons {
-      font-size: 40px;
-      color: var(--Primary-color);
-    }
-
-    .second,
-    .third {
-      color: var(--Process-hide-color);
-    }
-
-    h3 {
-      text-align: center;
-      margin-top: 20px;
-      font-weight: var(--Second-Font-Weight);
-      font-size: var(--Font-process-size-mobile);
-    }
-  }
-}
+//   .FinishInfo,
+//   .EditInfo,.secondArrow{
+//     opacity: 0.3;
+//   }
+// }
 
 /* SHOPPING_CART */
 .bottom-line {
@@ -291,25 +203,38 @@
     display: block;
     margin: 0;
 
-    .storeproductmobile {
-      .body {
-        width: 250px;
-        height: 80px;
-        background: var(--Primary-color);
-        box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.25);
-        border-radius: 15px;
-      }
-
+    .storecardmobile {
       img {
+        position: absolute;
+        z-index: 1;
         width: 70px;
         top: 10%;
         left: -5%;
       }
 
-      p {
-        color: #ffffff;
-        font-family: var(--Font-Family);
-        margin: 0;
+      .storeproductmobile {
+        .body {
+          width: 250px;
+          height: 80px;
+          background: var(--Primary-color);
+          box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.25);
+          border-radius: 15px;
+
+          .storeiconmobile {
+            .heart,
+            .cartlike {
+              font-size: 30px;
+              color: #ffffff;
+              margin: 0 5px;
+            }
+          }
+        }
+
+        p {
+          color: #ffffff;
+          font-family: var(--Font-Family);
+          margin: 0;
+        }
       }
     }
   }
