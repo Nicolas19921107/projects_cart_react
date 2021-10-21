@@ -1,12 +1,15 @@
 import React from 'react'
 import {
   FaShoppingCart,
-  FaArrowRight,
+  FaLongArrowAltRight,
   FaTrash,
   FaPlusCircle,
   FaMinusCircle,
   FaRegEdit,
   FaCheck,
+  FaRegHeart,
+  FaCartPlus,
+  FaAngleDoubleRight,
 } from 'react-icons/fa'
 
 import product1 from '../image/image 94.png'
@@ -30,25 +33,25 @@ function Cart_PreOrder(props) {
           <FaShoppingCart className="icons" />
           <h3 className="first">確認購物車</h3>
         </div>
-        <FaArrowRight className="arrow first" />
+        <FaLongArrowAltRight className="arrow first" />
         <div className="EditInfo col-lg-3 col-xs-1">
           <FaRegEdit className="icons second" />
           <h3 className="second">填寫資料</h3>
         </div>
-        <FaArrowRight className="arrow second" />
+        <FaLongArrowAltRight className="arrow second" />
         <div className="FinishInfo col-lg-3 col-xs-1">
           <FaCheck className="icons third" />
           <h3 className="third">完成訂單</h3>
         </div>
       </div>
 
-      <div className="container shoppingtitle my-5 col-xs-6">
+      <div className="container shoppingtitle my-5 col-lg-10">
         <span>SHOPPING CART</span>
-        <div className="bottom-line col-lg-6 col-xs-6"></div>
+        <div className="bottom-line col-lg-6 col-10 mx-lg-0 mx-auto"></div>
       </div>
 
-      <div className="container ordercheck col-xs-6">
-        <div className="orderlist col-lg-8 col-xs-6">
+      <div className="container ordercheck col-lg-10 d-lg-flex">
+        <div className="orderlist col-lg-8 col-12">
           <table className="table table-borderless table-responsive">
             <thead>
               <tr className="border-bottom">
@@ -66,14 +69,14 @@ function Cart_PreOrder(props) {
                   <img src={product1} alt="" />
                 </td>
                 <td className="text-start">Optimum Nutrition 100% 乳清蛋白</td>
-                <td className="text-start">- 50P</td>
+                <td className="text-start ">- 50P</td>
                 <td className="text-start">
-                  <FaMinusCircle />2
-                  <FaPlusCircle />
+                  <FaMinusCircle className="countIcon" />2
+                  <FaPlusCircle className="countIcon" />
                 </td>
-                <td className="text-start">2000</td>
+                <td className="text-start">NT$2,000</td>
                 <td>
-                  <FaTrash />
+                  <FaTrash className="trashIcon" />
                 </td>
               </tr>
               <tr>
@@ -83,12 +86,12 @@ function Cart_PreOrder(props) {
                 <td className="text-start">名富米酒(保)</td>
                 <td className="text-start">- 50P</td>
                 <td className="text-start">
-                  <FaMinusCircle />2
-                  <FaPlusCircle />
+                  <FaMinusCircle className="countIcon" />2
+                  <FaPlusCircle className="countIcon" />
                 </td>
-                <td className="text-start">354</td>
+                <td className="text-start">NT$354</td>
                 <td>
-                  <FaTrash />
+                  <FaTrash className="trashIcon" />
                 </td>
               </tr>
               <tr>
@@ -98,18 +101,17 @@ function Cart_PreOrder(props) {
                 <td className="text-start">奧利塔冷壓純橄欖油 1L</td>
                 <td className="text-start">- 50P</td>
                 <td className="text-start">
-                  <FaMinusCircle />2
-                  <FaPlusCircle />
+                  <FaMinusCircle className="countIcon" />2
+                  <FaPlusCircle className="countIcon" />
                 </td>
-                <td className="text-start">354</td>
+                <td className="text-start">NT$354</td>
                 <td>
-                  <FaTrash />
+                  <FaTrash className="trashIcon" />
                 </td>
               </tr>
             </tbody>
           </table>
-
-          <table className="tablemobile table-borderless table-responsive-sm">
+          <table className="tablemobile table-borderless">
             <thead></thead>
             <tbody>
               <tr>
@@ -121,10 +123,9 @@ function Cart_PreOrder(props) {
                   <br />
                   NT$2,000
                 </td>
-                <td className="text-start">- 50P</td>
                 <td className="text-start col-4 text-center">
-                  <i className="fas fa-minus-circle"></i>2
-                  <i className="fas fa-plus-circle"></i>
+                  <FaMinusCircle className="countIcon" />2
+                  <FaPlusCircle className="countIcon" />
                 </td>
               </tr>
               <tr>
@@ -136,10 +137,9 @@ function Cart_PreOrder(props) {
                   <br />
                   NT$354
                 </td>
-                <td className="text-start">- 50P</td>
                 <td className="text-start col-4 text-center">
-                  <i className="fas fa-minus-circle"></i>2
-                  <i className="fas fa-plus-circle"></i>
+                  <FaMinusCircle className="countIcon" />2
+                  <FaPlusCircle className="countIcon" />
                 </td>
               </tr>
               <tr>
@@ -151,24 +151,21 @@ function Cart_PreOrder(props) {
                   <br />
                   NT$354
                 </td>
-                <td className="text-start">- 50P</td>
                 <td className="text-start col-4 text-center">
-                  <i className="fas fa-minus-circle"></i>2
-                  <i className="fas fa-plus-circle"></i>
+                  <FaMinusCircle className="countIcon" />2
+                  <FaPlusCircle className="countIcon" />
                 </td>
               </tr>
             </tbody>
           </table>
           <div className="bottomline"></div>
 
-          <h4 className="col-lg-10 text-lg-start text-center">
-            你可能也會喜歡
-          </h4>
+          <h4 className="col-lg-10 text-lg-start">你可能也會喜歡</h4>
           <div className="storelike col-12 d-lg-flex justify-content-around align-content-center my-5">
-            <div className="storecard col-lg-3 col-10 position-relative">
+            <div className="storecard col-lg-4 col-10 position-relative">
               <img src={productlike1} className="position-absolute" />
               <div className="storeproduct">
-                <div className="body py-3">
+                <div className="body py-2">
                   <p className="text ps-5 text-center">
                     【減醣料理】
                     <br />
@@ -179,18 +176,20 @@ function Cart_PreOrder(props) {
                     className="storeicon text-center"
                     onclick="heartclick(event)"
                   >
-                    <i className="far fa-heart ms-5"></i>
+                    <FaRegHeart className="heart" />
+                    <FaCartPlus className="cartlike" />
+                    {/* <i className="far fa-heart ms-5"></i>
                     <i className="fas fa-heart ms-5 fullheart"></i>
-                    <i className="fas fa-cart-plus ms-4"></i>
+                    <i className="fas fa-cart-plus ms-4"></i> */}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="storecard col-lg-3 col-10 position-relative">
+            <div className="storecard col-lg-4 col-10 position-relative">
               <img src={productlike1} className="position-absolute" />
               <div className="storeproduct">
-                <div className="body py-3">
+                <div className="body py-2">
                   <p className="text ps-5 text-center">
                     【減醣料理】
                     <br />
@@ -201,16 +200,18 @@ function Cart_PreOrder(props) {
                     className="storeicon text-center"
                     onclick="heartclick(event)"
                   >
-                    <i className="far fa-heart ms-5"></i>
+                    <FaRegHeart className="heart" />
+                    <FaCartPlus className="cartlike" />
+                    {/* <i className="far fa-heart ms-5"></i>
                     <i className="fas fa-heart ms-5 fullheart"></i>
-                    <i className="fas fa-cart-plus ms-4"></i>
+                    <i className="fas fa-cart-plus ms-4"></i> */}
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="morecard my-auto">
-              <i className="fas fa-angle-double-right"></i>
+              <FaAngleDoubleRight className="DoubleRight" />
               <h1>MORE</h1>
             </div>
           </div>
@@ -229,33 +230,15 @@ function Cart_PreOrder(props) {
                     className="storeiconmobile my-auto me-3"
                     onclick="heartclick(event)"
                   >
-                    <i className="far fa-heart mx-2" id="heart1"></i>
-                    <i className="fas fa-heart mx-2 fullheart" id="heartA"></i>
-                    <i className="fas fa-cart-plus mx-2"></i>
+                    <FaRegHeart className="heart" />
+                    <FaCartPlus className="cartlike" />
+                    {/* <i className="fas fa-heart mx-2 fullheart" id="heartA"></i>
+                    <i className="fas fa-cart-plus mx-2"></i> */}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="storecardmobile position-relative my-5 mx-2">
-              <img src={productlike1} className="position-absolute" />
-              <div className="storeproductmobile col-10 mx-2">
-                <div className="body d-flex justify-content-end">
-                  <p className="text my-auto me-4">
-                    【減醣料理】
-                    <br />
-                    三杯嫩雞 3 包
-                  </p>
-                  <div
-                    className="storeiconmobile my-auto me-3"
-                    onclick="heartclick(event)"
-                  >
-                    <i className="far fa-heart mx-2" id="heart2"></i>
-                    <i className="fas fa-heart mx-2 fullheart" id="heartB"></i>
-                    <i className="fas fa-cart-plus mx-2"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
+     
 
             <div className="morecardmobile my-5">
               <h1>MORE</h1>
@@ -263,49 +246,49 @@ function Cart_PreOrder(props) {
           </div>
         </div>
 
-        <div class="orderinfolist col-lg-3 col-xs-6 ml-4 mx-auto mt-2 text-center">
+        <div class="orderinfolist col-lg-3 mx-lg-3 mt-3">
           <h4>訂單資訊</h4>
           <table class="table table-borderless">
             <tbody>
               <tr scope="row" class="border-top">
-                <th class="text-start">商品小計</th>
-                <td class="text-end">NT$4,708</td>
+                <th>商品小計</th>
+                <td>NT$4,708</td>
               </tr>
               <tr scope="row">
-                <th class="text-start">運費</th>
-                <td class="text-end">未選擇</td>
+                <th>運費</th>
+                <td>未選擇</td>
               </tr>
               <tr scope="row">
-                <th class="text-start">帳戶折抵</th>
-                <td class="text-end">-NT$100</td>
+                <th>帳戶折抵</th>
+                <td>-NT$100</td>
               </tr>
-              <tr scope="row" class="border-bottom">
-                <th class="text-start">優惠</th>
-                <td class="text-end">-NT$100</td>
-              </tr>
-              <tr scope="row">
-                <th class="text-start">商品總計</th>
-                <td class="text-end">NT$4,608</td>
+              <tr scope="row" className="border-bottom">
+                <th>優惠</th>
+                <td>-NT$100</td>
               </tr>
               <tr scope="row">
-                <th class="text-start">優惠代碼</th>
-                <td class="text-end"></td>
+                <th>商品總計</th>
+                <td>NT$4,608</td>
+              </tr>
+              <tr scope="row">
+                <th>優惠代碼</th>
+                <td></td>
               </tr>
             </tbody>
           </table>
-          <div class="promotion d-flex justify-content-around">
+          <div class="promotion d-flex justify-content-between">
             <input type="text" />
             <button>使用</button>
           </div>
 
           <div class="my-3">
             <button
-              class="orderconfirm col-10 my-3"
+              class="orderconfirm col-12 my-3"
               onclick="location.href='./Cart_Manage.html'"
             >
               結帳去
             </button>
-            <button class="returnstore col-10 my-3">返回商城</button>
+            <button class="returnstore col-12 my-3">返回商城</button>
           </div>
         </div>
       </div>

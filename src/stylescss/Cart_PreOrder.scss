@@ -95,6 +95,11 @@
       color: var(--Primary-color);
     }
 
+    .second,
+    .third {
+      color: var(--Process-hide-color);
+    }
+
     h3 {
       text-align: center;
       margin-top: 20px;
@@ -107,7 +112,7 @@
 /* SHOPPING_CART */
 .bottom-line {
   height: 1px;
-  border: 1px solid var(--Process-hide-color);
+  border: 0.5px solid var(--Process-hide-color);
 }
 
 .shoppingtitle {
@@ -132,9 +137,6 @@
 /* 訂單表格的標題、內文 */
 
 .ordercheck {
-  display: flex;
-  justify-content: space-between;
-
   .orderlist {
     .table {
       th {
@@ -145,9 +147,17 @@
 
       td {
         font-size: var(--Order-list-content-size);
-        text-align: center;
-        // line-height: 100px;
+        vertical-align: middle;
         font-family: var(--Font-Family);
+      }
+
+      .countIcon {
+        font-size: var(--Order-list-title-size);
+        color: var(--Primary-color);
+        margin: 0 10px;
+      }
+      .trashIcon {
+        color: var(--Second-color);
       }
     }
 
@@ -163,9 +173,9 @@
       margin: 40px 0px;
     }
     .bottomline {
-      height: 1px;
+      // height: 1px;
       border: 1px solid #000000;
-      margin: 20px auto;
+      margin: 20px 10px;
     }
   }
 
@@ -180,7 +190,7 @@
       .tablemobile {
         display: block;
         font-size: var(--Font-table-content-size-mobile);
-        text-align: center;
+        // text-align: center;
         font-family: var(--Font-Family);
 
         img {
@@ -191,9 +201,15 @@
           padding: 10px 0px;
         }
 
+        .countIcon {
+          font-size: var(--Order-list-title-size);
+          color: var(--Primary-color);
+          margin: 0 10px;
+        }
+
         .bottomline {
           height: 1px;
-          border: 1px solid #000000;
+          border: 0.5px solid #000000;
           margin: 20px auto;
         }
       }
@@ -202,6 +218,39 @@
 }
 
 /* 你可能也會喜歡 */
+.storelike {
+  .storecard {
+    .storeproduct {
+      .storeicon {
+        .heart,
+        .cartlike {
+          font-size: 30px;
+          color: #ffffff;
+          margin: 0 10px;
+        }
+      }
+      .body {
+        background: var(--Primary-color);
+        box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.25);
+        border-radius: 15px;
+      }
+      img {
+        top: 0%;
+        left: 0%;
+      }
+      p {
+        color: #ffffff;
+        font-size: var(--Order-list-title-size);
+        font-family: var(--Font-Family);
+      }
+    }
+    img {
+      width: 120px;
+      top: 20%;
+      left: -20%;
+    }
+  }
+}
 
 .storelikemobile {
   display: none;
@@ -225,29 +274,9 @@
     font-family: var(--Font-English-Family);
     font-size: var(--Button-font-size);
   }
-}
-
-.storecard {
-  img {
-    width: 120px;
-    top: 20%;
-    left: -30%;
-  }
-  .storeproduct {
-    .body {
-      background: var(--Primary-color);
-      box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.25);
-      border-radius: 15px;
-    }
-    img {
-      top: 0%;
-      left: 0%;
-    }
-    p {
-      color: #ffffff;
-      font-size: var(--Order-list-title-size);
-      font-family: var(--Font-Family);
-    }
+  .DoubleRight {
+    font-size: 50px;
+    color: var(--Third-color);
   }
 }
 
@@ -255,13 +284,16 @@
   .storelike {
     display: none;
   }
+
+  //做到這邊
+
   .storelikemobile {
     display: block;
     margin: 0;
 
     .storeproductmobile {
       .body {
-        width: 300px;
+        width: 250px;
         height: 80px;
         background: var(--Primary-color);
         box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.25);
@@ -297,6 +329,10 @@
 
 /* 訂單簡易資訊 */
 .orderinfolist {
+  h4 {
+    text-align: center;
+  }
+
   .table {
     font-size: var(--Orderinfo-list-font-size);
     font-family: var(--Font-Family);
@@ -304,6 +340,10 @@
 
     th {
       font-weight: var(--Second-Font-Weight);
+    }
+
+    td {
+      text-align: end;
     }
   }
   h4 {
@@ -314,6 +354,10 @@
   }
 
   .promotion {
+    input {
+      width: 50%;
+    }
+
     button {
       font-size: var(--Order-list-content-size);
       font-family: var(--Font-Family);
