@@ -11,6 +11,14 @@ import StoreCardMobile from './StoreCardMobile'
 import axios from 'axios'
 //示意圖
 
+const initState = (array) => {
+  const State = []
+  for (let i = 0; i < array.length; i++) {
+    State.push(1)
+  }
+  return State
+}
+
 function OrderDetail() {
   const [Likeicon, setLikeicon] = useState('full')
   const [unLikeicon, setunLikeicon] = useState('heart')
@@ -18,7 +26,7 @@ function OrderDetail() {
   const [total, setTotal] = useState(0)
   const [judge, setjudge] = useState(false)
   const [deleteProduct, setdeleteProduct] = useState()
-  const [Count, setCount] = useState()
+  const [Count, setCount] = useState(initState())
 
   useEffect(() => {
     // ;(async () => {
@@ -32,6 +40,13 @@ function OrderDetail() {
       // console.log(r)
       if (r.status === 200) {
         setData(r.data)
+        const ProductCount = () => {
+          let totalCount = 0
+          for (let i = 0; i < data.length; i++) {
+            totalCount += data[i]
+          }
+          return totalCount
+        }
       }
     })()
   }, [DeleteProduct])
@@ -91,9 +106,7 @@ function OrderDetail() {
                         {el.Order_Amount}
                         <FaPlusCircle
                           className="countIcon"
-                          onClick={() => {
-                        
-                          }}
+                          onClick={() => {}}
                         />
                       </td>
                       <td className="text-start">{el.price}</td>
