@@ -11,13 +11,14 @@ import StoreCardMobile from './StoreCardMobile'
 import axios from 'axios'
 //示意圖
 
-function OrderDetail(props) {
-  const { AmountChange, setAmountChange } = props
+function OrderDetail() {
   const [Likeicon, setLikeicon] = useState('full')
   const [unLikeicon, setunLikeicon] = useState('heart')
   let [data, setData] = useState([{}])
   const [total, setTotal] = useState(0)
+  const [judge, setjudge] = useState(false)
   const [deleteProduct, setdeleteProduct] = useState()
+  const [Count, setCount] = useState()
 
   useEffect(() => {
     // ;(async () => {
@@ -28,20 +29,27 @@ function OrderDetail(props) {
 
     ;(async () => {
       let r = await axios.get('http://localhost:3001/cart/')
-      console.log(r)
+      // console.log(r)
       if (r.status === 200) {
         setData(r.data)
       }
     })()
-  }, [deleteProduct])
+  }, [DeleteProduct])
 
-  function deletProduct(e) {
-    ;(async () => {
-      let del = await axios.delete(`http://localhost:3001/cart/${e}`)
-      if (del.status === 200) {
-        setTotal(total - 1)
-      }
-    })()
+  function DeleteProduct(e) {
+    let del = axios.delete(`http://localhost:3001/cart/${e}`)
+    if (del.status === 200) {
+      console.log('ok')
+    }
+  }
+
+  async function ModifyProduct(e, t) {
+    let Mod = await axios.put(`http://localhost:3001/cart/${e.Order_Sid}`, {
+      Order_Amount: t,
+    })
+    if (Mod.status === 200) {
+      console.log(Mod)
+    }
   }
 
   return (
@@ -76,19 +84,15 @@ function OrderDetail(props) {
                         <FaMinusCircle
                           className="countIcon"
                           onClick={() => {
-                            // console.log(e.target)
-                            setAmountChange(
-                              AmountChange < 1 ? 0 : AmountChange - 1
-                            )
+                            setTotal(parseInt(el.Order_Amount) - 1)
+                            ModifyProduct(el, total)
                           }}
                         />
                         {el.Order_Amount}
                         <FaPlusCircle
                           className="countIcon"
                           onClick={() => {
-                            setAmountChange(
-                              AmountChange > 9 ? 10 : AmountChange + 1
-                            )
+                        
                           }}
                         />
                       </td>
@@ -96,11 +100,9 @@ function OrderDetail(props) {
                       <td>
                         <FaTrash
                           className="trashIcon"
-                          total={total}
                           onClick={() => {
-                            console.log(el.Order_Sid)
-                            deletProduct(el.Order_Sid)
-                            setTotal(total - 1)
+                            // console.log(el.Order_Sid)
+                            DeleteProduct(el.Order_Sid)
                           }}
                         />
                       </td>
@@ -144,7 +146,40 @@ function OrderDetail(props) {
         <table className="tablemobile table-borderless">
           <thead></thead>
           <tbody>
-            <tr>
+            {data.map
+              ? data.map((el) => {
+                  ;<tr>
+                    <td>
+                      <img
+                        src={`http://localhost:3000/image/${el.cate_sid}/${el.Product_id}.jpg`}
+                        alt=""
+                      />
+                    </td>
+                    <td className="text-start">
+                      {el.name} <br />
+                      NT${el.price}
+                    </td>
+                    <td className="text-start col-4 text-center">
+                      <FaMinusCircle
+                        className="countIcon"
+                        onClick={() => {
+                          // console.log(el)
+                          // ModifyProduct(el)
+                        }}
+                      />
+                      {el.Order_Amount}
+                      <FaPlusCircle
+                        className="countIcon"
+                        onClick={() => {
+                          // console.log(e.target)
+                        }}
+                      />
+                    </td>
+                  </tr>
+                })
+              : ''}
+
+            {/* <tr>
               <td>
                 <img src="../../../image/product1.png" alt="" />
               </td>
@@ -158,19 +193,17 @@ function OrderDetail(props) {
                   className="countIcon"
                   onClick={() => {
                     // console.log(e.target)
-                    setAmountChange(AmountChange < 1 ? 0 : AmountChange - 1)
                   }}
                 />
-                {AmountChange}
+                10
                 <FaPlusCircle
                   className="countIcon"
                   onClick={() => {
                     // console.log(e.target)
-                    setAmountChange(AmountChange > 9 ? 10 : AmountChange + 1)
                   }}
                 />
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
 

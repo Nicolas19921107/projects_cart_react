@@ -44,8 +44,7 @@ function Cart_PreOrder() {
 
       <div className="container ordercheck col-lg-10 d-lg-flex">
         <OrderDetail
-          AmountChange={AmountChange}
-          setAmountChange={setAmountChange}
+ 
         />
         <OrderInfo />
       </div>
