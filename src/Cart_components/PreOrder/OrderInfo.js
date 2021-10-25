@@ -1,6 +1,15 @@
 import React from 'react'
-
+import { useState, useEffect } from 'react'
 function OrderInfo(props) {
+  let [data, setData] = useState([{}])
+
+  useEffect(() => {
+    ;(async () => {
+      let r = await fetch('http://localhost:3001/cart/')
+      let j = await r.json()
+      setData(j)
+    })()
+  }, [setData])
   return (
     <>
       <div className="orderinfolist col-lg-3 mx-lg-3 mt-3">
@@ -14,10 +23,6 @@ function OrderInfo(props) {
             <tr scope="row">
               <th>運費</th>
               <td>未選擇</td>
-            </tr>
-            <tr scope="row">
-              <th>帳戶折抵</th>
-              <td>-NT$100</td>
             </tr>
             <tr scope="row" className="border-bottom">
               <th>優惠</th>
@@ -33,7 +38,7 @@ function OrderInfo(props) {
             </tr>
           </tbody>
         </table>
-        
+
         <div className="promotion d-flex justify-content-between">
           <input type="text" />
           <button>使用</button>

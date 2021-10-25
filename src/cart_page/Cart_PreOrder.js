@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   FaShoppingCart,
   FaLongArrowAltRight,
@@ -9,7 +9,7 @@ import OrderInfo from '../Cart_components/PreOrder/OrderInfo'
 import OrderDetail from '../Cart_components/PreOrder/OrderDetail'
 
 function Cart_PreOrder() {
-  const [AmountChange, setAmountChange] = useState(0)
+  const [AmountChange, setAmountChange] = useState()
 
   return (
     <>

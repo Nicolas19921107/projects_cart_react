@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   FaRegHeart,
   FaCartPlus,
@@ -63,7 +63,7 @@ function StoreCard(props) {
                 className="storeicon text-center"
                 onclick="heartclick(event)"
               >
-              {/* 卡關:兩個都會亮起關閉 */}
+                {/* 卡關:兩個都會亮起關閉 */}
                 <FaRegHeart
                   className={unLikeicon}
                   onClick={(e) => {
