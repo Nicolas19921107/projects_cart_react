@@ -1,7 +1,4 @@
 import React from 'react'
-import product1 from '../../image/image 94.png'
-import product2 from '../../image/image 95.png'
-import product3 from '../../image/image 96.png'
 import { FaChevronDown } from 'react-icons/fa'
 
 function Cart_OrderDetail(props) {
@@ -27,7 +24,7 @@ function Cart_OrderDetail(props) {
               <tbody>
                 <tr>
                   <td>
-                    <img src={product1} alt="" />
+                    <img src="../../../image/product1.png" alt="" />
                   </td>
                   <td>Optimum Nutrition 100% 乳清蛋白</td>
                   <td>折扣 50 Points</td>
@@ -36,7 +33,7 @@ function Cart_OrderDetail(props) {
                 </tr>
                 <tr>
                   <td>
-                    <img src={product2} alt="" />
+                    <img src="../../../image/product1.png" alt="" />
                   </td>
                   <td>名富米酒(保)</td>
                   <td>折扣 50 Points</td>
@@ -45,7 +42,7 @@ function Cart_OrderDetail(props) {
                 </tr>
                 <tr>
                   <td>
-                    <img src={product3} alt="" />
+                    <img src="../../../image/product1.png" alt="" />
                   </td>
                   <td>奧利塔冷壓純橄欖油 1L</td>
                   <td>折扣 50 Points</td>
@@ -62,7 +59,7 @@ function Cart_OrderDetail(props) {
               <tbody>
                 <tr>
                   <td>
-                    <img src={product1} alt="" />
+                    <img src="../../../image/product1.png" alt="" />
                   </td>
                   <td>
                     Optimum Nutrition 100% 乳清蛋白
@@ -73,7 +70,7 @@ function Cart_OrderDetail(props) {
                 </tr>
                 <tr>
                   <td>
-                    <img src={product2} alt="" />
+                    <img src="../../../image/product1.png" alt="" />
                   </td>
                   <td>
                     名富米酒(保)
@@ -84,7 +81,7 @@ function Cart_OrderDetail(props) {
                 </tr>
                 <tr>
                   <td>
-                    <img src={product3} alt="" />
+                    <img src="../../../image/product1.png" alt="" />
                   </td>
                   <td>
                     奧利塔冷壓純橄欖油 1L

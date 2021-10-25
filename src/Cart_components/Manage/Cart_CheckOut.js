@@ -1,9 +1,4 @@
 import React from 'react'
-import icon1 from '../../image/cc-apple-pay-brands.svg'
-import icon2 from '../../image/cc-mastercard-brands.svg'
-import icon3 from '../../image/cc-visa-brands.svg'
-import icon4 from '../../image/google-pay-brands.svg'
-
 
 function Cart_CheckOut(props) {
   return (
@@ -36,10 +31,10 @@ function Cart_CheckOut(props) {
             <input type="radio" name="delivery" id="delivery" value="D" />
             <label for="">信用卡支付</label>
             <div className="payicon mx-2">
-              <img src={icon1} alt="" />
-              <img src={icon2} alt="" />
-              <img src={icon3} alt="" />
-              <img src={icon4} alt="" />
+              <img src="../../../image/cc-apple-pay-brands.svg" alt="" />
+              <img src="../../../image/cc-mastercard-brands.svg" alt="" />
+              <img src="../../../image/cc-visa-brands.svg" alt="" />
+              <img src="../../../image/google-pay-brands.svg" alt="" />
             </div>
           </div>
           <div className="choose">
@@ -78,10 +73,10 @@ function Cart_CheckOut(props) {
             onclick="radiochange(event)"
           />
           <div className="payicon d-flex align-content-center">
-            <img src={icon1} alt="" />
-            <img src={icon2} alt="" />
-            <img src={icon3} alt="" />
-            <img src={icon4} alt="" />
+            <img src="../../../image/cc-apple-pay-brands.svg" alt="" />
+            <img src="../../../image/cc-mastercard-brands.svg" alt="" />
+            <img src="../../../image/cc-visa-brands.svg" alt="" />
+            <img src="../../../image/google-pay-brands.svg" alt="" />
           </div>
           <label for="">信用卡支付</label>
         </div>

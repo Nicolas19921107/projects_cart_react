@@ -1,14 +1,14 @@
 import React from 'react'
-import reactiframe from 'react-iframe'
+import Iframe from 'react-iframe'
 import { FaChevronDown } from 'react-icons/fa'
-import ee from '../../image/7-11 icon.png'
+
 function Cart_Store(props) {
   return (
     <>
       <div className="container store_711 col-lg-6 col-10">
         <div className="storeinfo d-lg-flex justify-content-around ">
           <div className="store_711_image col-lg-2 col-10 text-center mx-auto">
-            <img src={ee} alt="" />
+            <img src="../../../image/7-11icon.png" alt="" />
           </div>
           <div className="store_711_info col-lg-5 col-10 my-auto">
             <h4>已選擇門市店號:155083</h4>
@@ -49,14 +49,12 @@ function Cart_Store(props) {
             </select>
             <FaChevronDown className="ChevronDown position-absolute" />
           </div>
-          {/* <reactiframe
+          <Iframe
             className="col-12 my-5"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1807.5132236306938!2d121.54191407519947!3d25.033176522941467!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd49963984b%3A0x57f2f5ed99bc208!2zNy1FTEVWRU4g6ZGr5b6p6ZaA5biC!5e0!3m2!1szh-TW!2stw!4v1634475462113!5m2!1szh-TW!2stw"
-            height="300"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-          ></reactiframe> */}
+            url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1807.5132236306938!2d121.54191407519947!3d25.033176522941467!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd49963984b%3A0x57f2f5ed99bc208!2zNy1FTEVWRU4g6ZGr5b6p6ZaA5biC!5e0!3m2!1szh-TW!2stw!4v1634475462113!5m2!1szh-TW!2stw"
+            height="300px"
+            display="initial"
+          ></Iframe>
           <div className="storeinput name">
             <label for="">
               <span>*</span>姓名

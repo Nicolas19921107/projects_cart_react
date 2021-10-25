@@ -49,9 +49,9 @@ function Cart_Manage() {
       <div class="titleBorder col-lg-6 col-10">
         <h4 class="res-title title-fz fw-700">取貨資料</h4>
       </div>
-      {/* <Cart_Store /> */}
+      <Cart_Store />
       {/* <Cart_CreditPay /> */}
-      <Cart_OrderInfoInput />
+      {/* <Cart_OrderInfoInput /> */}
       <div class="titleBorder col-lg-6 col-10">
         <h4 class="res-title title-fz fw-700">發票方式</h4>
       </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   FaShoppingCart,
   FaLongArrowAltRight,
@@ -8,7 +8,9 @@ import {
 import OrderInfo from '../Cart_components/PreOrder/OrderInfo'
 import OrderDetail from '../Cart_components/PreOrder/OrderDetail'
 
-function Cart_PreOrder(props) {
+function Cart_PreOrder() {
+  const [AmountChange, setAmountChange] = useState(0)
+
   return (
     <>
       <div className="container-fluid Banner col-xs-10">
@@ -41,7 +43,10 @@ function Cart_PreOrder(props) {
       </div>
 
       <div className="container ordercheck col-lg-10 d-lg-flex">
-        <OrderDetail />
+        <OrderDetail
+          AmountChange={AmountChange}
+          setAmountChange={setAmountChange}
+        />
         <OrderInfo />
       </div>
     </>

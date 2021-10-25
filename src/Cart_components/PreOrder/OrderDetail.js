@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   FaTrash,
   FaPlusCircle,
@@ -8,13 +8,16 @@ import {
 import StoreCard from './StoreCard'
 import StoreCardMobile from './StoreCardMobile'
 //示意圖
-import product1 from '../../image/image 94.png'
-import product2 from '../../image/image 95.png'
-import product3 from '../../image/image 96.png'
+
 function OrderDetail(props) {
+  const { AmountChange, setAmountChange } = props
+  const [Likeicon, setLikeicon] = useState('full')
+  const [unLikeicon, setunLikeicon] = useState('heart')
+
   return (
     <>
       <div className="orderlist col-lg-8 col-12">
+        {/* 桌機版 */}
         <table className="table table-borderless table-responsive">
           <thead>
             <tr className="border-bottom">
@@ -29,45 +32,28 @@ function OrderDetail(props) {
           <tbody>
             <tr>
               <td>
-                <img src={product1} alt="" />
+                <img src="../../../image/product1.png" alt="" />
               </td>
               <td className="text-start">Optimum Nutrition 100% 乳清蛋白</td>
               <td className="text-start ">- 50P</td>
               <td className="text-start">
-                <FaMinusCircle className="countIcon" />2
-                <FaPlusCircle className="countIcon" />
+                <FaMinusCircle
+                  className="countIcon"
+                  onClick={() => {
+                    // console.log(e.target)
+                    setAmountChange(AmountChange < 1 ? 0 : AmountChange - 1)
+                  }}
+                />
+                {AmountChange}
+                <FaPlusCircle
+                  className="countIcon"
+                  onClick={() => {
+                    // console.log(e.target)
+                    setAmountChange(AmountChange > 9 ? 10 : AmountChange + 1)
+                  }}
+                />
               </td>
               <td className="text-start">NT$2,000</td>
-              <td>
-                <FaTrash className="trashIcon" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img src={product2} alt="" />
-              </td>
-              <td className="text-start">名富米酒(保)</td>
-              <td className="text-start">- 50P</td>
-              <td className="text-start">
-                <FaMinusCircle className="countIcon" />2
-                <FaPlusCircle className="countIcon" />
-              </td>
-              <td className="text-start">NT$354</td>
-              <td>
-                <FaTrash className="trashIcon" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img src={product3} alt="" />
-              </td>
-              <td className="text-start">奧利塔冷壓純橄欖油 1L</td>
-              <td className="text-start">- 50P</td>
-              <td className="text-start">
-                <FaMinusCircle className="countIcon" />2
-                <FaPlusCircle className="countIcon" />
-              </td>
-              <td className="text-start">NT$354</td>
               <td>
                 <FaTrash className="trashIcon" />
               </td>
@@ -75,12 +61,13 @@ function OrderDetail(props) {
           </tbody>
         </table>
 
+        {/* 手機板 */}
         <table className="tablemobile table-borderless">
           <thead></thead>
           <tbody>
             <tr>
               <td>
-                <img src={product1} alt="" />
+                <img src="../../../image/product1.png" alt="" />
               </td>
               <td className="text-start">
                 Optimum Nutrition 100% 乳清蛋白
@@ -88,36 +75,21 @@ function OrderDetail(props) {
                 NT$2,000
               </td>
               <td className="text-start col-4 text-center">
-                <FaMinusCircle className="countIcon" />2
-                <FaPlusCircle className="countIcon" />
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <img src={product2} alt="" />
-              </td>
-              <td className="text-start">
-                名富米酒(保)
-                <br />
-                NT$354
-              </td>
-              <td className="text-start col-4 text-center">
-                <FaMinusCircle className="countIcon" />2
-                <FaPlusCircle className="countIcon" />
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <img src={product3} alt="" />
-              </td>
-              <td className="text-start">
-                奧利塔冷壓純橄欖油 1L
-                <br />
-                NT$354
-              </td>
-              <td className="text-start col-4 text-center">
-                <FaMinusCircle className="countIcon" />2
-                <FaPlusCircle className="countIcon" />
+                <FaMinusCircle
+                  className="countIcon"
+                  onClick={() => {
+                    // console.log(e.target)
+                    setAmountChange(AmountChange < 1 ? 0 : AmountChange - 1)
+                  }}
+                />
+                {AmountChange}
+                <FaPlusCircle
+                  className="countIcon"
+                  onClick={() => {
+                    // console.log(e.target)
+                    setAmountChange(AmountChange > 9 ? 10 : AmountChange + 1)
+                  }}
+                />
               </td>
             </tr>
           </tbody>
@@ -126,20 +98,14 @@ function OrderDetail(props) {
         <div className="bottomline col-lg-9"></div>
 
         <h4 className="col-lg-10 text-lg-start">你可能也會喜歡</h4>
-        <div className="storelike col-12 d-lg-flex justify-content-around align-content-center my-5">
-          <StoreCard />
-          <div className="morecard my-auto">
-            <FaAngleDoubleRight className="DoubleRight" />
-            <h1>MORE</h1>
-          </div>
-        </div>
+        <StoreCard
+          Likeicon={Likeicon}
+          setLikeicon={setLikeicon}
+          unLikeicon={unLikeicon}
+          setunLikeicon={setunLikeicon}
+        />
 
-        <div className="storelikemobile">
-          <StoreCardMobile />
-          <div className="morecardmobile my-5">
-            <h1>MORE</h1>
-          </div>
-        </div>
+        <StoreCardMobile />
       </div>
     </>
   )
