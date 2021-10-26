@@ -7,10 +7,79 @@ import {
 } from 'react-icons/fa'
 import OrderInfo from '../Cart_components/PreOrder/OrderInfo'
 import OrderDetail from '../Cart_components/PreOrder/OrderDetail'
+import axios from 'axios'
+
+const initState = (array) => {
+  const state = []
+  for (let i = 0; i < array.length; i++) {
+    state.push(1)
+  }
+  console.log('state', state)
+  return state
+}
 
 function Cart_PreOrder() {
-  const [AmountChange, setAmountChange] = useState()
+  let [data, setData] = useState([{}])
+  const [Count, setCount] = useState([])
+  useEffect(() => {
+    // ;(async () => {
+    //   let r = await fetch(CART)
+    //   let j = await r.json()
+    //   setData(j)
+    // })()
 
+    ;(async () => {
+      let r = await axios.get('http://localhost:3001/cart/')
+      // console.log(r)
+      if (r.status === 200) {
+        setData(r.data)
+        // console.log(data)
+      }
+      setCount(initState(data))
+      console.log('count', Count)
+      console.log('data', data)
+    })()
+  }, [])
+
+  function DeleteProduct(e) {
+    let del = axios.delete(`http://localhost:3001/cart/${e}`)
+    if (del.status === 200) {
+      console.log('ok')
+    }
+  }
+
+  // async function ModifyProduct(e, t) {
+  //   let Mod = await axios.put(`http://localhost:3001/cart/${e.Order_Sid}`, {
+  //     Order_Amount: t,
+  //   })
+  //   if (Mod.status === 200) {
+  //     console.log(Mod)
+  //   }
+  // }
+
+  // Summary
+  // 計算目前所有的商品數量
+  const productCount = () => {
+    let totalCount = 0
+
+    for (let i = 0; i < Count.length; i++) {
+      totalCount += Count[i]
+      console.log(Count[i])
+    }
+
+    return totalCount
+  }
+
+  // 計算目前所有的商品總價
+  const totalPrice = () => {
+    let sum = 0
+
+    for (let i = 0; i < data.length; i++) {
+      sum += Count[i] * data[i].price
+    }
+
+    return sum
+  }
   return (
     <>
       <div className="container-fluid Banner col-xs-10">
@@ -44,9 +113,13 @@ function Cart_PreOrder() {
 
       <div className="container ordercheck col-lg-10 d-lg-flex">
         <OrderDetail
- 
+          data={data}
+          setCount={setCount}
+          Count={Count}
+          DeleteProduct={DeleteProduct}
+          // ModifyProduct={ModifyProduct}
         />
-        <OrderInfo />
+        <OrderInfo productCount={productCount} totalPrice={totalPrice} />
       </div>
     </>
   )

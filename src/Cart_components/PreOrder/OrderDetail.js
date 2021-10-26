@@ -1,71 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import {
-  FaTrash,
-  FaPlusCircle,
-  FaMinusCircle,
-  FaAngleDoubleRight,
-} from 'react-icons/fa'
 import StoreCard from './StoreCard'
 import StoreCardMobile from './StoreCardMobile'
+import CartItem from './CartItem'
+import CartMobile from './CartMobile'
 // import CART from '../../config'
-import axios from 'axios'
 //示意圖
 
-const initState = (array) => {
-  const State = []
-  for (let i = 0; i < array.length; i++) {
-    State.push(1)
-  }
-  return State
-}
-
-function OrderDetail() {
+function OrderDetail(props) {
   const [Likeicon, setLikeicon] = useState('full')
   const [unLikeicon, setunLikeicon] = useState('heart')
-  let [data, setData] = useState([{}])
-  const [total, setTotal] = useState(0)
-  const [judge, setjudge] = useState(false)
-  const [deleteProduct, setdeleteProduct] = useState()
-  const [Count, setCount] = useState(initState())
-
-  useEffect(() => {
-    // ;(async () => {
-    //   let r = await fetch(CART)
-    //   let j = await r.json()
-    //   setData(j)
-    // })()
-
-    ;(async () => {
-      let r = await axios.get('http://localhost:3001/cart/')
-      // console.log(r)
-      if (r.status === 200) {
-        setData(r.data)
-        const ProductCount = () => {
-          let totalCount = 0
-          for (let i = 0; i < data.length; i++) {
-            totalCount += data[i]
-          }
-          return totalCount
-        }
-      }
-    })()
-  }, [DeleteProduct])
-
-  function DeleteProduct(e) {
-    let del = axios.delete(`http://localhost:3001/cart/${e}`)
-    if (del.status === 200) {
-      console.log('ok')
-    }
-  }
-
-  async function ModifyProduct(e, t) {
-    let Mod = await axios.put(`http://localhost:3001/cart/${e.Order_Sid}`, {
-      Order_Amount: t,
-    })
-    if (Mod.status === 200) {
-      console.log(Mod)
-    }
-  }
+  // let [data, setData] = useState([{}])
+  // const [total, setTotal] = useState(0)
+  // const [judge, setjudge] = useState(false)
+  // const [deleteProduct, setdeleteProduct] = useState()
+  // const [Count, setCount] = useState(initState(data))
+  const { data, Count, setCount, DeleteProduct, ModifyProduct } = props
 
   return (
     <>
@@ -84,42 +33,20 @@ function OrderDetail() {
           </thead>
           <tbody>
             {data.map
-              ? data.map((el) => {
+              ? data.map((v, i) => {
                   return (
-                    <tr>
-                      <td>
-                        <img
-                          src={`http://localhost:3000/image/${el.cate_sid}/${el.Product_id}.jpg`}
-                          alt=""
-                        />
-                      </td>
-                      <td className="text-start">{el.name}</td>
-                      <td className="text-start ">{el.Promotion_Number}</td>
-                      <td className="text-start">
-                        <FaMinusCircle
-                          className="countIcon"
-                          onClick={() => {
-                            setTotal(parseInt(el.Order_Amount) - 1)
-                            ModifyProduct(el, total)
-                          }}
-                        />
-                        {el.Order_Amount}
-                        <FaPlusCircle
-                          className="countIcon"
-                          onClick={() => {}}
-                        />
-                      </td>
-                      <td className="text-start">{el.price}</td>
-                      <td>
-                        <FaTrash
-                          className="trashIcon"
-                          onClick={() => {
-                            // console.log(el.Order_Sid)
-                            DeleteProduct(el.Order_Sid)
-                          }}
-                        />
-                      </td>
-                    </tr>
+                    <CartItem
+                      Order_Sid={v.Order_Sid}
+                      Product_id={v.Product_id}
+                      name={v.name}
+                      cate_sid={v.cate_sid}
+                      Promotion_Number={v.Promotion_Number}
+                      price={v.price}
+                      Order_Amount={v.Order_Amount}
+                      Count={Count[i]}
+                      DeleteProduct={DeleteProduct}
+                      // ModifyProduct={ModifyProduct(v.Order_Sid)}
+                    />
                   )
                 })
               : 'No Result'}
@@ -160,35 +87,18 @@ function OrderDetail() {
           <thead></thead>
           <tbody>
             {data.map
-              ? data.map((el) => {
-                  ;<tr>
-                    <td>
-                      <img
-                        src={`http://localhost:3000/image/${el.cate_sid}/${el.Product_id}.jpg`}
-                        alt=""
-                      />
-                    </td>
-                    <td className="text-start">
-                      {el.name} <br />
-                      NT${el.price}
-                    </td>
-                    <td className="text-start col-4 text-center">
-                      <FaMinusCircle
-                        className="countIcon"
-                        onClick={() => {
-                          // console.log(el)
-                          // ModifyProduct(el)
-                        }}
-                      />
-                      {el.Order_Amount}
-                      <FaPlusCircle
-                        className="countIcon"
-                        onClick={() => {
-                          // console.log(e.target)
-                        }}
-                      />
-                    </td>
-                  </tr>
+              ? data.map((v, i) => {
+                  ;<CartMobile
+                    Order_Sid={v.Order_Sid}
+                    Product_id={v.Product_id}
+                    name={v.name}
+                    cate_sid={v.cate_sid}
+                    Promotion_Number={v.Promotion_Number}
+                    price={v.price}
+                    Order_Amount={v.Order_Amount}
+                    DeleteProduct={DeleteProduct}
+                    ModifyProduct={ModifyProduct}
+                  />
                 })
               : ''}
 
