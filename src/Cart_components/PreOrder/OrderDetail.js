@@ -1,21 +1,39 @@
 import React, { useState, useEffect } from 'react'
 import StoreCard from './StoreCard'
 import StoreCardMobile from './StoreCardMobile'
-import CartItem from './CartItem'
-import CartMobile from './CartMobile'
+import axios from 'axios'
+// import CartItem from './CartItem'
+// import CartMobile from './CartMobile'
+import {
+  FaTrash,
+  FaPlusCircle,
+  FaMinusCircle,
+  FaAngleDoubleRight,
+} from 'react-icons/fa'
 // import CART from '../../config'
 //示意圖
 
 function OrderDetail(props) {
   const [Likeicon, setLikeicon] = useState('full')
   const [unLikeicon, setunLikeicon] = useState('heart')
-  // let [data, setData] = useState([{}])
-  // const [total, setTotal] = useState(0)
-  // const [judge, setjudge] = useState(false)
-  // const [deleteProduct, setdeleteProduct] = useState()
-  // const [Count, setCount] = useState(initState(data))
-  let { data, Count, setCount, DeleteProduct, ModifyProduct } = props
-  console.log(Count[0])
+  let { data, Count, setCount, Judge, setJudge, DeleteProduct } = props
+  let NewCount = [...Count]
+  console.log('第二層', NewCount)
+  console.log('第二層判斷', Judge)
+
+  async function ModifyProduct(SCount, Order_Sid, i) {
+    console.log(SCount, Order_Sid, i)
+    let Mod = await axios.put(`http://localhost:3001/cart/${Order_Sid}`, {
+      Order_Amount: SCount,
+    })
+    if (Mod.status === 200) {
+      console.log('第二層的 Modify', NewCount)
+      setCount(NewCount)
+      setJudge(true)
+      console.log('第二層_修改判斷', Judge)
+    }
+    return NewCount
+  }
   return (
     <>
       <div className="orderlist col-lg-8 col-12">
@@ -35,20 +53,43 @@ function OrderDetail(props) {
             {data.map
               ? data.map((v, i) => {
                   return (
-                    <CartItem
-                      Order_Sid={v.Order_Sid}
-                      Product_id={v.Product_id}
-                      name={v.name}
-                      cate_sid={v.cate_sid}
-                      Promotion_Number={v.Promotion_Number}
-                      price={v.price}
-                      Order_Amount={v.Order_Amount}
-                      Count={Count}
-                      pos={i}
-                      setCount={setCount}
-                      // DeleteProduct={DeleteProduct}
-                      // ModifyProduct={ModifyProduct(v.Order_Sid)}
-                    />
+                    <tr>
+                      <td>
+                        <img
+                          src={`http://localhost:3000/image/${v.cate_sid}/${v.Product_id}.jpg`}
+                          alt=""
+                        />
+                      </td>
+                      <td className="text-start">{v.name}</td>
+                      <td className="text-start ">{v.Promotion_Number}</td>
+                      <td className="text-start">
+                        <FaMinusCircle
+                          className="countIcon"
+                          onClick={() => {
+                            // setTotal(parseInt(el.Order_Amount) - 1)
+                            // ModifyProduct(el, total)
+                          }}
+                        />
+                        {NewCount[i]}
+                        <FaPlusCircle
+                          className="countIcon"
+                          onClick={() => {
+                            NewCount[i] += 1
+                            ModifyProduct(NewCount[i], v.Order_Sid, i)
+                          }}
+                        />
+                      </td>
+                      <td className="text-start">{v.price}</td>
+                      <td>
+                        <FaTrash
+                          className="trashIcon"
+                          onClick={() => {
+                            // console.log(el.Order_Sid)
+                            // DeleteProduct(Order_Sid)
+                          }}
+                        />
+                      </td>
+                    </tr>
                   )
                 })
               : 'No Result'}
@@ -90,7 +131,9 @@ function OrderDetail(props) {
           <tbody>
             {data.map
               ? data.map((v, i) => {
-                  ;<CartMobile />
+                  {
+                    /* ;<CartMobile /> */
+                  }
                 })
               : ''}
 

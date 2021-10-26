@@ -11,10 +11,13 @@ import axios from 'axios'
 
 function Cart_PreOrder() {
   let [data, setData] = useState([{}])
-  let [Count, setCount] = useState([{}])
+  let [Count, setCount] = useState([])
+  let [Judge, setJudge] = useState(false)
 
   useEffect(() => {
+    console.log('useEffect判斷', Judge)
     DataAxios()
+    console.log('useEffect裡面', Count)
   }, [])
 
   // [
@@ -29,27 +32,25 @@ function Cart_PreOrder() {
   // ]
   async function DataAxios() {
     let r = await axios.get('http://localhost:3001/cart/')
-    // console.log(r.data)
+    console.log('data', r)
     if (r.status === 200) {
       setData(r.data)
-      // const NewCount = [...r.data]
-      // setCount(NewCount)
-      // console.log('Count', Count)
+      console.log('DataAxios裡面', Count)
       for (let i = 0; i < r.data.length; i++) {
         Count[i] = r.data[i].Order_Amount
       }
       setCount(Count)
-      console.log(Count)
     }
+    return Count
   }
+  console.log('第一層', Count)
+
   // function DeleteProduct(e) {
   //   let del = axios.delete(`http://localhost:3001/cart/${e}`)
   //   if (del.status === 200) {
   //     console.log('ok')
   //   }
   // }
-
-
 
   // Summary
   // 計算目前所有的商品數量
@@ -109,6 +110,8 @@ function Cart_PreOrder() {
         <OrderDetail
           data={data}
           setCount={setCount}
+          Judge={Judge}
+          setJudge={setJudge}
           Count={Count}
           // DeleteProduct={DeleteProduct}
           // // ModifyProduct={ModifyProduct}

@@ -19,6 +19,8 @@ function CartMobile(props) {
     DeleteProduct,
     ModifyProduct,
   } = props
+
+ 
   return (
     <>
       <tr>

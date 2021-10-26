@@ -15,19 +15,14 @@ function CartItem(props) {
     cate_sid,
     price,
     Order_Amount,
-    Count,
+    CountA,
     pos,
     setCount,
   } = props
 
-  const [ChangeCount, setChangeCount] = useState(Count)
-  const NewCount = 0
-  ChangeCount.map((v, i) => {
-    NewCount = v
-
-    return NewCount
-  })
-  console.log('第三層', ChangeCount[pos])
+  const [ChangeCount, setChangeCount] = useState(CountA)
+  // let NewCount = [...Count]
+  console.log('第三層', CountA)
 
   // async function ModifyProduct(e, t) {
   //   let Mod = await axios.put(`http://localhost:3001/cart/${e.Order_Sid}`, {
@@ -56,7 +51,7 @@ function CartItem(props) {
               // ModifyProduct(el, total)
             }}
           />
-          {NewCount}
+          {}
           <FaPlusCircle
             className="countIcon"
             onClick={() => {
