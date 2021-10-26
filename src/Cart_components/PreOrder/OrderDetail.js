@@ -14,8 +14,8 @@ function OrderDetail(props) {
   // const [judge, setjudge] = useState(false)
   // const [deleteProduct, setdeleteProduct] = useState()
   // const [Count, setCount] = useState(initState(data))
-  const { data, Count, setCount, DeleteProduct, ModifyProduct } = props
-
+  let { data, Count, setCount, DeleteProduct, ModifyProduct } = props
+  console.log(Count[0])
   return (
     <>
       <div className="orderlist col-lg-8 col-12">
@@ -43,8 +43,10 @@ function OrderDetail(props) {
                       Promotion_Number={v.Promotion_Number}
                       price={v.price}
                       Order_Amount={v.Order_Amount}
-                      Count={Count[i]}
-                      DeleteProduct={DeleteProduct}
+                      Count={Count}
+                      pos={i}
+                      setCount={setCount}
+                      // DeleteProduct={DeleteProduct}
                       // ModifyProduct={ModifyProduct(v.Order_Sid)}
                     />
                   )
@@ -88,17 +90,7 @@ function OrderDetail(props) {
           <tbody>
             {data.map
               ? data.map((v, i) => {
-                  ;<CartMobile
-                    Order_Sid={v.Order_Sid}
-                    Product_id={v.Product_id}
-                    name={v.name}
-                    cate_sid={v.cate_sid}
-                    Promotion_Number={v.Promotion_Number}
-                    price={v.price}
-                    Order_Amount={v.Order_Amount}
-                    DeleteProduct={DeleteProduct}
-                    ModifyProduct={ModifyProduct}
-                  />
+                  ;<CartMobile />
                 })
               : ''}
 

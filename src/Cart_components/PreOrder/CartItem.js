@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   FaTrash,
   FaPlusCircle,
@@ -16,10 +16,27 @@ function CartItem(props) {
     price,
     Order_Amount,
     Count,
+    pos,
     setCount,
-    DeleteProduct,
-    ModifyProduct,
   } = props
+
+  const [ChangeCount, setChangeCount] = useState(Count)
+  const NewCount = 0
+  ChangeCount.map((v, i) => {
+    NewCount = v
+
+    return NewCount
+  })
+  console.log('第三層', ChangeCount[pos])
+
+  // async function ModifyProduct(e, t) {
+  //   let Mod = await axios.put(`http://localhost:3001/cart/${e.Order_Sid}`, {
+  //     Order_Amount: t,
+  //   })
+  //   if (Mod.status === 200) {
+  //     console.log(Mod)
+  //   }
+  // }
   return (
     <>
       <tr>
@@ -39,11 +56,13 @@ function CartItem(props) {
               // ModifyProduct(el, total)
             }}
           />
-          {Order_Amount}
+          {NewCount}
           <FaPlusCircle
             className="countIcon"
             onClick={() => {
-            //   ModifyProduct(Order_Amount + 1)
+              // setChangeCount()
+              // console.log(ChangeCount[pos])
+              //   ModifyProduct(Order_Amount + 1)
             }}
           />
         </td>
@@ -53,7 +72,7 @@ function CartItem(props) {
             className="trashIcon"
             onClick={() => {
               // console.log(el.Order_Sid)
-              DeleteProduct(Order_Sid)
+              // DeleteProduct(Order_Sid)
             }}
           />
         </td>
