@@ -9,23 +9,17 @@ import {
 function StoreCard(props) {
   const { Likeicon, setLikeicon } = props
   const { unLikeicon, setunLikeicon } = props
+  let { addProduct, setaddProduct } = props
 
   return (
     <>
       <div className="storelike col-10 d-lg-flex justify-content-around align-content-center my-5">
         <div className="storecard col-lg-4 col-10 position-relative">
-          <img
-            src="../../../image/otherproduct.png"
-            className="position-absolute"
-          />
+          {/* <img src="../../../image/2/PW005.jpg" className="position-absolute" /> */}
           <div className="storeproduct">
             <div className="body py-2">
-              <p className="text ps-5 text-center">
-                【減醣料理】
-                <br />
-                三杯嫩雞 3 包
-              </p>
-              <p className="text ps-5 text-center">NT$ 290</p>
+              <p className="text ps-5 text-center">特選草飼沙朗牛</p>
+              <p className="text ps-5 text-center">NT$80</p>
               <div className="storeicon text-center">
                 <FaRegHeart
                   className={unLikeicon}
@@ -47,18 +41,14 @@ function StoreCard(props) {
           </div>
         </div>
         <div className="storecard col-lg-4 col-10 position-relative">
-          <img
+          {/* <img
             src="../../../image/otherproduct.png"
             className="position-absolute"
-          />
+          /> */}
           <div className="storeproduct">
             <div className="body py-2">
-              <p className="text ps-5 text-center">
-                【減醣料理】
-                <br />
-                三杯嫩雞 3 包
-              </p>
-              <p className="text ps-5 text-center">NT$ 290</p>
+              <p className="text ps-5 text-center">冰烤地瓜</p>
+              <p className="text ps-5 text-center">NT$79</p>
               <div
                 className="storeicon text-center"
                 onclick="heartclick(event)"
@@ -78,7 +68,15 @@ function StoreCard(props) {
                     setunLikeicon('heart')
                   }}
                 />{' '}
-                <FaCartPlus className="cartlike" />
+                <FaCartPlus
+                  className="cartlike"
+                  onClick={() => {
+                    let NewAddProduct = [...addProduct]
+                    NewAddProduct.push(1, 'PM001', 'st880517')
+                    console.log('物件新增', NewAddProduct)
+                    setaddProduct(NewAddProduct)
+                  }}
+                />
               </div>
             </div>
           </div>

@@ -46,7 +46,7 @@
         font-size: var(--Order-list-content-size);
         vertical-align: middle;
         font-family: var(--Font-Family);
-
+        width: 150px;
         img {
           width: 100px;
         }
@@ -150,7 +150,7 @@
     }
     img {
       width: 120px;
-      top: 20%;
+      top: 10%;
       left: -20%;
     }
   }

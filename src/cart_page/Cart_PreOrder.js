@@ -12,69 +12,130 @@ import axios from 'axios'
 function Cart_PreOrder() {
   let [data, setData] = useState([{}])
   let [Count, setCount] = useState([])
-  let [Judge, setJudge] = useState(false)
+  let [Pos, setPos] = useState()
+  let [ODPos, setODPos] = useState()
+  let [DeletePos, setDeleteODPos] = useState()
+  let [addProduct, setaddProduct] = useState([])
+  let [Promotion, setPromotion] = useState(0)
 
   useEffect(() => {
-    console.log('useEffect判斷', Judge)
+    console.log('這邊是初始化')
     DataAxios()
-    console.log('useEffect裡面', Count)
   }, [])
 
-  // [
-  //   {
-  //     Order_Sid:1,
-  //     Order_Amount:1
-  //   },{
-  //     Order_Sid:2,
-  //     Order_Amount:10
-  //   }
-  //   ,
-  // ]
+  useEffect(() => {
+    // console.log('有傳到這裡')
+    // console.log('目前商品位置', Pos, ODPos)
+    ModifyProduct(Count, Pos, ODPos)
+  }, [Count])
+
+  useEffect(() => {
+    // console.log('目前刪除位置', DeletePos)
+    DeleteProduct(DeletePos)
+  }, [DeletePos])
+
+  useEffect(() => {
+    // console.log('目前新增位置', addProduct)
+    AddProduct(addProduct)
+  }, [addProduct])
+
   async function DataAxios() {
     let r = await axios.get('http://localhost:3001/cart/')
-    console.log('data', r)
     if (r.status === 200) {
       setData(r.data)
-      console.log('DataAxios裡面', Count)
       for (let i = 0; i < r.data.length; i++) {
         Count[i] = r.data[i].Order_Amount
       }
+      console.log('DataAxios裡面', Count)
       setCount(Count)
+      productPrice()
+      // totalPromotion()
+      totalPrice()
+      // return Count
     }
-    return Count
   }
-  console.log('第一層', Count)
 
-  // function DeleteProduct(e) {
-  //   let del = axios.delete(`http://localhost:3001/cart/${e}`)
-  //   if (del.status === 200) {
-  //     console.log('ok')
-  //   }
-  // }
+  async function AddProduct(addProduct) {
+    // console.log('我在這喔')
+    let newAddProduct = [...addProduct]
+    console.log(newAddProduct[0])
+    let Add = await axios.post(`http://localhost:3001/cart/`, {
+      Order_Amount: newAddProduct[0],
+      Product_id: newAddProduct[1],
+      Member_id: newAddProduct[2],
+    })
+    if (Add.status === 200) {
+      setaddProduct([])
+      // console.log('現在的addProduct', addProduct)
+      DataAxios()
+      return Count
+    }
+  }
+
+  async function ModifyProduct(Count, Pos) {
+    // console.log('修改函數', Count, Pos, ODPos, Count[Pos])
+    let Mod = await axios.put(`http://localhost:3001/cart/${ODPos}`, {
+      Order_Amount: Count[Pos],
+    })
+    if (Mod.status === 200) {
+      console.log('已經 Modify', Count)
+      DataAxios()
+      return Count
+    }
+  }
+
+  async function DeleteProduct(DeletePos) {
+    let del = await axios.delete(`http://localhost:3001/cart/${DeletePos}`)
+    if (del.status === 200) {
+      console.log('已經刪除')
+      DataAxios()
+      return DeletePos
+    }
+  }
 
   // Summary
-  // 計算目前所有的商品數量
-  // const productCount = () => {
-  //   let totalCount = 0
+  // 計算目前所有的商品小計
+  const productPrice = () => {
+    let totalCount = 0
+    let priceinfo = [...data]
 
-  //   for (let i = 0; i < Count.length; i++) {
-  //     totalCount += Count[i]
-  //     console.log(Count[i])
-  //   }
+    priceinfo.map((v, i) => {
+      totalCount += v.Order_Amount * v.price
+    })
 
-  //   return totalCount
+    // for (let i = 0; i < Count.length; i++) {
+    // }
+    console.log('商品小計', totalCount)
+
+    return totalCount
+  }
+
+  // // 計算目前所有的商品優惠總價
+  // const totalPromotion = () => {
+  //   let Promotionsum = 0
+  //   let Promoinfo = [...data]
+
+  //   Promoinfo.map((v, i) => {
+  //     Promotionsum += v.Promotion_Number
+  //   })
+
+  //   console.log('商品總優惠', Promotionsum)
+  //   return Promotionsum
   // }
 
-  // // 計算目前所有的商品總價
-  // const totalPrice = () => {
-  //   let sum = 0
+  const totalPrice = () => {
+    let Pricesum = 0
+    let Priceinfo = [...data]
 
-  //   for (let i = 0; i < data.length; i++) {
-  //     sum += Count[i] * data[i].price
-  //   }
+    Priceinfo.map((v, i) => {
+      Pricesum += v.Order_Amount * v.price
+    })
+    Pricesum -= Promotion
 
-  //   return sum
-  // }
+    console.log('商品總價', Pricesum)
+    return Pricesum
+  }
+
   return (
     <>
       <div className="container-fluid Banner col-xs-10">
@@ -109,15 +170,22 @@ function Cart_PreOrder() {
       <div className="container ordercheck col-lg-10 d-lg-flex">
         <OrderDetail
           data={data}
-          setCount={setCount}
-          Judge={Judge}
-          setJudge={setJudge}
           Count={Count}
-          // DeleteProduct={DeleteProduct}
-          // // ModifyProduct={ModifyProduct}
+          setCount={setCount}
+          Pos={Pos}
+          setODPos={setODPos}
+          setPos={setPos}
+          setDeleteODPos={setDeleteODPos}
+          addProduct={addProduct}
+          setaddProduct={setaddProduct}
         />
-        <OrderInfo />
-        {/* <OrderInfo productCount={productCount} totalPrice={totalPrice} /> */}
+        <OrderInfo
+          productPrice={productPrice}
+          totalPrice={totalPrice}
+          // totalPromotion={totalPromotion}
+          Promotion={Promotion}
+          setPromotion={setPromotion}
+        />
       </div>
     </>
   )

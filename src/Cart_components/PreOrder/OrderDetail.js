@@ -16,24 +16,20 @@ import {
 function OrderDetail(props) {
   const [Likeicon, setLikeicon] = useState('full')
   const [unLikeicon, setunLikeicon] = useState('heart')
-  let { data, Count, setCount, Judge, setJudge, DeleteProduct } = props
+  let {
+    data,
+    Count,
+    setCount,
+    setPos,
+    setODPos,
+    setDeleteODPos,
+    addProduct,
+    setaddProduct,
+  } = props
   let NewCount = [...Count]
-  console.log('第二層', NewCount)
-  console.log('第二層判斷', Judge)
+  // console.log('第二層Data展開', Pos)
+  // console.log('第二層', NewCount)
 
-  async function ModifyProduct(SCount, Order_Sid, i) {
-    console.log(SCount, Order_Sid, i)
-    let Mod = await axios.put(`http://localhost:3001/cart/${Order_Sid}`, {
-      Order_Amount: SCount,
-    })
-    if (Mod.status === 200) {
-      console.log('第二層的 Modify', NewCount)
-      setCount(NewCount)
-      setJudge(true)
-      console.log('第二層_修改判斷', Judge)
-    }
-    return NewCount
-  }
   return (
     <>
       <div className="orderlist col-lg-8 col-12">
@@ -43,7 +39,6 @@ function OrderDetail(props) {
             <tr className="border-bottom">
               <th scope="col"></th>
               <th scope="col">商品資訊</th>
-              <th scope="col">優惠</th>
               <th scope="col">商品數量</th>
               <th scope="col">商品單價</th>
               <th scope="col"></th>
@@ -61,13 +56,16 @@ function OrderDetail(props) {
                         />
                       </td>
                       <td className="text-start">{v.name}</td>
-                      <td className="text-start ">{v.Promotion_Number}</td>
                       <td className="text-start">
                         <FaMinusCircle
                           className="countIcon"
                           onClick={() => {
-                            // setTotal(parseInt(el.Order_Amount) - 1)
-                            // ModifyProduct(el, total)
+                            NewCount[i] < 2
+                              ? setDeleteODPos(v.Order_Sid)
+                              : (NewCount[i] -= 1)
+                            setCount(NewCount)
+                            setPos(i)
+                            setODPos(v.Order_Sid)
                           }}
                         />
                         {NewCount[i]}
@@ -75,7 +73,10 @@ function OrderDetail(props) {
                           className="countIcon"
                           onClick={() => {
                             NewCount[i] += 1
-                            ModifyProduct(NewCount[i], v.Order_Sid, i)
+                            setCount(NewCount)
+                            // console.log('修改count', Count)
+                            setPos(i)
+                            setODPos(v.Order_Sid)
                           }}
                         />
                       </td>
@@ -84,8 +85,7 @@ function OrderDetail(props) {
                         <FaTrash
                           className="trashIcon"
                           onClick={() => {
-                            // console.log(el.Order_Sid)
-                            // DeleteProduct(Order_Sid)
+                            setDeleteODPos(v.Order_Sid)
                           }}
                         />
                       </td>
@@ -173,6 +173,8 @@ function OrderDetail(props) {
           setLikeicon={setLikeicon}
           unLikeicon={unLikeicon}
           setunLikeicon={setunLikeicon}
+          addProduct={addProduct}
+          setaddProduct={setaddProduct}
         />
 
         <StoreCardMobile />
