@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 function Cart_Complete(props) {
   return (
     <>
@@ -8,12 +9,12 @@ function Cart_Complete(props) {
           <h1 className="bannerTitle2 col-xs-6">眼前所及全部歸你</h1>
         </div>
       </div>
-      
+
       <div class="container confirmtitle my-5 text-center">
         <h1>訂單已送出，感謝您的訂購</h1>
       </div>
       <div class="container confirmnumber my-5 text-center">
-        <h3>訂單編號: AA202109190038</h3>
+        <h3>訂單編號: {localStorage.getItem('訂單編號')}</h3>
       </div>
 
       <div
@@ -27,11 +28,25 @@ function Cart_Complete(props) {
         text-center
       "
       >
-        <button class="info col-lg-4 col-10 my-3">返回商城</button>
-        <button class="info col-lg-4 col-10 my-3">查看其他訂單</button>
+        <button
+          class="info col-lg-4 col-10 my-3"
+          onClick={() => {
+            props.history.push('/')
+          }}
+        >
+          返回商城
+        </button>
+        <button
+          class="info col-lg-4 col-10 my-3"
+          onClick={() => {
+            props.history.push('/')
+          }}
+        >
+          查看其他訂單
+        </button>
       </div>
     </>
   )
 }
 
-export default Cart_Complete
+export default withRouter(Cart_Complete)
