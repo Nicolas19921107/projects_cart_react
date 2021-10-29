@@ -1,14 +1,63 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import $, { data } from 'jquery'
 // import Iframe from 'react-iframe'
 import { FaChevronDown } from 'react-icons/fa'
 
 function Cart_Store(props) {
+  let { StoreCity, setStoreCity } = props
+  let CityArr = [{}]
+  let DistrictArr = []
+  useEffect(() => {
+    console.log('這邊是初始化')
+    CityAxios()
+  }, [])
+
+  async function CityAxios() {
+    let r = await axios.get(
+      'https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json'
+    )
+    if (r.status === 200) {
+      // setData(r.data)
+      console.log(r.data)
+      for (let i = 0; i < r.data.length; i++) {
+        CityArr[i] = {
+          Name: r.data[i].name,
+          Districts: r.data[i].districts[i],
+        }
+        StoreCity[i] = CityArr[i].Name
+      }
+      setStoreCity(StoreCity)
+      console.log('Store城市', StoreCity)
+      DataAxios()
+    }
+  }
+
+  async function DataAxios() {
+    console.log('City', CityArr[0].Name)
+    console.log('District', CityArr[0].Districts.name)
+    let r = await axios.post('http://localhost:3001/cart/store', {
+      commandid: 'SearchStore',
+      city: '台北市',
+      town: CityArr[0].Districts.name,
+      roadname: '臨沂街',
+    })
+    if (r.status === 200) {
+      // setData(r.data)
+      console.log('DataX', r.data)
+      const jq = $(r.data)
+      jq.find('GeoPosition Address').each((i, el) => {
+        console.log('順序', i, el)
+      })
+    }
+  }
+
   return (
     <>
       <div className="container store_711 col-lg-6 col-10">
         <div className="storeinfo d-lg-flex justify-content-around ">
           <div className="store_711_image col-lg-2 col-10 text-center mx-auto">
-            <img src="../../../image/7-11icon.png" alt="" />
+            <img src="http://localhost:3000/image/711icon.png" alt="" />
           </div>
           <div className="store_711_info col-lg-5 col-10 my-auto">
             <h4>已選擇門市店號:155083</h4>
@@ -24,8 +73,11 @@ function Cart_Store(props) {
           </label>
           <div className="dropdown">
             <select name="city" id="city">
-              <option value="1">台北市</option>
-              <option value="2">新北市</option>
+              {StoreCity.map((v, i) => {
+                return <option value="15456454">1</option>
+              })}
+              {/* <option value="1">台北市</option>
+              <option value="2">新北市</option> */}
             </select>
             <FaChevronDown className="ChevronDown position-absolute" />
           </div>

@@ -17,8 +17,11 @@ import {
 function Cart_Manage(props) {
   let [data, setData] = useState([{}])
   let [OrderInfo, setOrderInfo] = useState([])
-  let [Checkout, setCheckout] = useState()
+  let [Checkout, setCheckout] = useState('宅配貨到付款')
   let [Invoice, setInvoice] = useState([])
+  let [Credit, setCredit] = useState([])
+  let [StoreCity, setStoreCity] = useState([])
+
   console.log('Checkout', Checkout)
 
   useEffect(() => {
@@ -29,7 +32,7 @@ function Cart_Manage(props) {
   useEffect(() => {
     // console.log('訂購資料', OrderInfo)
     // console.log('付款資料', Checkout)
-    // console.log('發票資料', Invoice)
+    console.log('發票資料', Invoice)
   }, [OrderInfo, Checkout, Invoice])
 
   async function DataAxios() {
@@ -41,23 +44,50 @@ function Cart_Manage(props) {
   }
 
   async function AddOrder(OrderInfo, Checkout, Invoice) {
-    console.log('寫出訂單')
-    let NewOrderInfo = [...OrderInfo, Checkout, ...Invoice]
+    // console.log('寫出訂單')
+    let NewOrderInfo = [Checkout, ...OrderInfo]
     console.log('寫出的訂購資料', NewOrderInfo)
+    if (!NewOrderInfo[7]) {
+      console.log('這邊是 undefine')
+      NewOrderInfo[7] = '無'
+      console.log('寫出的訂購資料_加入備註', NewOrderInfo)
+    }
+    NewOrderInfo = [...NewOrderInfo, ...Invoice]
+    console.log('寫出的訂購資料_加入發票', NewOrderInfo)
+
+    // console.log('寫出的訂購資料', NewOrderInfo)
     let r = await axios.post('http://localhost:3001/cart/addList', {
       Sid: '',
+      Payment_Type: NewOrderInfo[0],
+      Order_Name: NewOrderInfo[1],
+      Order_Phone: NewOrderInfo[2],
+      E_Mail: NewOrderInfo[3],
+      Order_Address: NewOrderInfo[4] + NewOrderInfo[5] + NewOrderInfo[6],
       Member_id: 'st880517',
-      Order_Name: NewOrderInfo[0],
-      Order_Phone: NewOrderInfo[1],
-      E_Mail: NewOrderInfo[2],
-      Order_Address: NewOrderInfo[3] + NewOrderInfo[4] + NewOrderInfo[5],
       Invoice_Type: NewOrderInfo[8],
-      Payment_Type: NewOrderInfo[7],
-      Order_Remark: NewOrderInfo[6],
+      Order_Remark: NewOrderInfo[7],
+      Invoice_Number: NewOrderInfo[9],
     })
     if (r.status === 200) {
       console.log('寫入 DB')
       props.history.push('/carts/ConfirmOrder')
+    }
+  }
+
+  function DeliveryJudge() {
+    if (Checkout === '7-11取貨付款') {
+      return <Cart_Store StoreCity={StoreCity} setStoreCity={setStoreCity} />
+    }
+    if (Checkout === '宅配貨到付款') {
+      return (
+        <Cart_OrderInfoInput
+          OrderInfo={OrderInfo}
+          setOrderInfo={setOrderInfo}
+        />
+      )
+    }
+    if (Checkout === '信用卡支付 - 宅配到府') {
+      return <Cart_CreditPay Credit={Credit} setCredit={setCredit} />
     }
   }
 
@@ -96,9 +126,7 @@ function Cart_Manage(props) {
       <div className="titleBorder col-lg-6 col-10">
         <h4 className="res-title title-fz fw-700">取貨資料</h4>
       </div>
-      {/* <Cart_Store OrderInfo={OrderInfo} setOrderInfo={setOrderInfo} /> */}
-      {/* <Cart_CreditPay OrderInfo={OrderInfo} setOrderInfo={setOrderInfo}  /> */}
-      <Cart_OrderInfoInput OrderInfo={OrderInfo} setOrderInfo={setOrderInfo} />
+      {DeliveryJudge()}
       <div className="titleBorder col-lg-6 col-10">
         <h4 className="res-title title-fz fw-700">發票方式</h4>
       </div>

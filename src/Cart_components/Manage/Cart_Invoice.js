@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 function Cart_Invoice(props) {
   let { Invoice, setInvoice } = props
   let [status, setStatus] = useState('hidden')
+  let [status1, setstatus1] = useState('hidden')
 
   function UpdateInfo(value, index) {
     let NewInvoice = [...Invoice]
@@ -21,6 +22,7 @@ function Cart_Invoice(props) {
             onClick={(e) => {
               UpdateInfo(e.target.value, 0)
               setStatus('hidden')
+              setstatus1('hidden')
             }}
           />
           <input
@@ -29,7 +31,8 @@ function Cart_Invoice(props) {
             value="電子發票 - 公司"
             onClick={(e) => {
               UpdateInfo(e.target.value, 0)
-              setStatus('text')
+              setstatus1('text')
+              setStatus('hidden')
             }}
           />
           <input
@@ -38,6 +41,7 @@ function Cart_Invoice(props) {
             value="手機條碼載具"
             onClick={(e) => {
               UpdateInfo(e.target.value, 0)
+              setstatus1('hidden')
               setStatus('text')
             }}
           />
@@ -51,9 +55,9 @@ function Cart_Invoice(props) {
           }}
         />
         <input
-          type="hidden"
+          type={status1}
           class="infoinput col-12 px-3 mt-lg-5"
-          placeholder="/請輸入統一編號"
+          placeholder="請輸入統一編號"
           onChange={(e) => {
             UpdateInfo(e.target.value, 1)
           }}

@@ -133,7 +133,9 @@ function Cart_ConfimOrder(props) {
             </tr>
             <tr>
               <td className="title text-end col-5">發票方式</td>
-              <td className="text-start col-6">{DataDetail.Invoice_Type}</td>
+              <td className="text-start col-6">
+                {DataDetail.Invoice_Type} / {DataDetail.Invoice_Number}
+              </td>
             </tr>
             <tr className="border-bottom">
               <td className="title text-end col-5">備註</td>

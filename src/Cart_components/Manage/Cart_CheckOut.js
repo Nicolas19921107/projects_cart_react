@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 function Cart_CheckOut(props) {
   let { setCheckout } = props
 
-
   return (
     <>
       <div className="container col-lg-6 checkout" action="">
@@ -13,7 +12,7 @@ function Cart_CheckOut(props) {
               type="radio"
               name="checkout"
               id="checkout"
-              value="StoreA"
+              value="7-11取貨付款"
               onChange={(e) => {
                 setCheckout(e.target.value)
               }}
@@ -25,7 +24,7 @@ function Cart_CheckOut(props) {
               type="radio"
               name="checkout"
               id="checkout"
-              value="StoreB"
+              value="全家取貨付款"
               onChange={(e) => {
                 setCheckout(e.target.value)
                 // setStoreA(e.target.value)
@@ -39,7 +38,7 @@ function Cart_CheckOut(props) {
               type="radio"
               name="checkout"
               id="checkout"
-              value="Delivery"
+              value="宅配貨到付款"
               onChange={(e) => {
                 setCheckout(e.target.value)
                 // setStoreA(e.target.value)
@@ -57,7 +56,7 @@ function Cart_CheckOut(props) {
               type="radio"
               name="checkout"
               id="checkout"
-              value="CreditPay"
+              value="信用卡支付 - 宅配到府"
               onChange={(e) => {
                 setCheckout(e.target.value)
                 // setStoreA(e.target.value)
@@ -89,7 +88,7 @@ function Cart_CheckOut(props) {
               type="radio"
               name="checkout"
               id="checkout"
-              value="LINEPAY"
+              value="LINE PAY 支付 - 宅配到府"
               onChange={(e) => {
                 setCheckout(e.target.value)
                 // setStoreA(e.target.value)

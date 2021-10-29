@@ -1,6 +1,15 @@
 import React from 'react'
 
 function Cart_CreditPay(props) {
+  let { Credit, setCredit } = props
+
+  function UpdateInfo(value, index) {
+    let NewCredit = [...Credit]
+    NewCredit[index] = value
+    console.log('123', NewCredit)
+    setCredit(NewCredit)
+  }
+
   return (
     <>
       <form action="" class="container creditcard col-lg-6 col-10 px-0">
@@ -13,6 +22,10 @@ function Cart_CreditPay(props) {
             class="cardnumber mx-1"
             name="cardnumber"
             id="cardnumber"
+            onChange={(e) => {
+              console.log(e.target.value)
+              UpdateInfo(e.target.value, 0)
+            }}
           />
           <span>/</span>
           <input
@@ -20,6 +33,10 @@ function Cart_CreditPay(props) {
             class="cardnumber mx-1"
             name="cardnumber"
             id="cardnumber"
+            onChange={(e) => {
+              console.log(e.target.value)
+              UpdateInfo(e.target.value, 1)
+            }}
           />
           <span>/</span>
           <input
@@ -27,6 +44,10 @@ function Cart_CreditPay(props) {
             class="cardnumber mx-1"
             name="cardnumber"
             id="cardnumber"
+            onChange={(e) => {
+              console.log(e.target.value)
+              UpdateInfo(e.target.value, 2)
+            }}
           />
           <span>/</span>
           <input
@@ -34,6 +55,10 @@ function Cart_CreditPay(props) {
             class="cardnumber mx-1"
             name="cardnumber"
             id="cardnumber"
+            onChange={(e) => {
+              console.log(e.target.value)
+              UpdateInfo(e.target.value, 3)
+            }}
           />
         </div>
         <div class="creditcard_duedate">
@@ -46,6 +71,10 @@ function Cart_CreditPay(props) {
             name="cardduedate"
             id="cardduedate"
             placeholder="MM"
+            onChange={(e) => {
+              console.log(e.target.value)
+              UpdateInfo(e.target.value, 4)
+            }}
           />
           <span>/</span>
           <input
@@ -54,6 +83,10 @@ function Cart_CreditPay(props) {
             name="cardduedate"
             id="cardduedate"
             placeholder="YY"
+            onChange={(e) => {
+              console.log(e.target.value)
+              UpdateInfo(e.target.value, 5)
+            }}
           />
         </div>
         <div class="creditcard_checkcode">
@@ -66,6 +99,10 @@ function Cart_CreditPay(props) {
             name="cardcheckcode"
             id="cardcheckcode"
             placeholder="***"
+            onChange={(e) => {
+              console.log(e.target.value)
+              UpdateInfo(e.target.value, 6)
+            }}
           />
         </div>
 
