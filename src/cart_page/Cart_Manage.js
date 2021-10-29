@@ -20,12 +20,14 @@ function Cart_Manage(props) {
   let [Checkout, setCheckout] = useState('宅配貨到付款')
   let [Invoice, setInvoice] = useState([])
   let [Credit, setCredit] = useState([])
-  let [StoreCity, setStoreCity] = useState([])
+  let [StoreInfo, setStoreInfo] = useState([])
+  let [CityArr, setCityArr] = useState([{}])
 
   console.log('Checkout', Checkout)
 
   useEffect(() => {
     console.log('這邊是初始化')
+    CityAxios()
     DataAxios()
   }, [])
 
@@ -34,6 +36,23 @@ function Cart_Manage(props) {
     // console.log('付款資料', Checkout)
     console.log('發票資料', Invoice)
   }, [OrderInfo, Checkout, Invoice])
+
+  async function CityAxios() {
+    let r = await axios.get(
+      'https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json'
+    )
+    if (r.status === 200) {
+      // setData(r.data)
+      console.log(r.data)
+      for (let i = 0; i < r.data.length; i++) {
+        CityArr[i] = {
+          City: r.data[i].name,
+          districts: r.data[i].districts,
+        }
+      }
+      console.log('Store城市', CityArr)
+    }
+  }
 
   async function DataAxios() {
     let r = await axios.get('http://localhost:3001/cart/')
@@ -76,7 +95,14 @@ function Cart_Manage(props) {
 
   function DeliveryJudge() {
     if (Checkout === '7-11取貨付款') {
-      return <Cart_Store StoreCity={StoreCity} setStoreCity={setStoreCity} />
+      return (
+        <Cart_Store
+          StoreInfo={StoreInfo}
+          setStoreInfo={setStoreInfo}
+          CityArr={CityArr}
+          setCityArr={setCityArr}
+        />
+      )
     }
     if (Checkout === '宅配貨到付款') {
       return (

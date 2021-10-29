@@ -5,51 +5,47 @@ import $, { data } from 'jquery'
 import { FaChevronDown } from 'react-icons/fa'
 
 function Cart_Store(props) {
-  let { StoreCity, setStoreCity } = props
-  let CityArr = [{}]
-  let DistrictArr = []
+  let { StoreInfo, setStoreInfo, CityArr, setCityArr } = props
+  let [StoreCity, setStoreCity] = useState([])
+  let Address = []
+  console.log(CityArr)
   useEffect(() => {
-    console.log('這邊是初始化')
-    CityAxios()
-  }, [])
-
-  async function CityAxios() {
-    let r = await axios.get(
-      'https://gist.githubusercontent.com/abc873693/2804e64324eaaf26515281710e1792df/raw/a1e1fc17d04b47c564bbd9dba0d59a6a325ec7c1/taiwan_districts.json'
-    )
-    if (r.status === 200) {
-      // setData(r.data)
-      console.log(r.data)
-      for (let i = 0; i < r.data.length; i++) {
-        CityArr[i] = {
-          Name: r.data[i].name,
-          Districts: r.data[i].districts[i],
-        }
-        StoreCity[i] = CityArr[i].Name
-      }
-      setStoreCity(StoreCity)
-      console.log('Store城市', StoreCity)
+    if (StoreCity[0] && StoreCity[1]) {
       DataAxios()
+    }
+  }, [StoreCity])
+
+  async function DataAxios() {
+    console.log('City', StoreCity[0])
+    console.log('District', StoreCity[1])
+    let r = await axios.post('http://localhost:3001/cart/store', {
+      commandid: 'SearchStore',
+      city: StoreCity[0],
+      town: StoreCity[1],
+      // roadname: '臨沂街',
+    })
+    if (r.status === 200) {
+      console.log('DataX', r.data)
+      const jqAddress = $(r.data)
+      const jqPOIName = $(r.data)
+      jqPOIName.find('GeoPosition POIName').each((i, el) => {
+        console.log('店名', el.innerText)
+        Address[i] = { Name: el.innerText + '門市', Address: '' }
+      })
+      jqAddress.find('GeoPosition Address').each((i, el) => {
+        console.log('地址', el)
+        Address[i].Address = el.innerText
+      })
+
+      console.log('店名陣列', Address)
     }
   }
 
-  async function DataAxios() {
-    console.log('City', CityArr[0].Name)
-    console.log('District', CityArr[0].Districts.name)
-    let r = await axios.post('http://localhost:3001/cart/store', {
-      commandid: 'SearchStore',
-      city: '台北市',
-      town: CityArr[0].Districts.name,
-      roadname: '臨沂街',
-    })
-    if (r.status === 200) {
-      // setData(r.data)
-      console.log('DataX', r.data)
-      const jq = $(r.data)
-      jq.find('GeoPosition Address').each((i, el) => {
-        console.log('順序', i, el)
-      })
-    }
+  function UpdateInfo(value, index) {
+    let NewStoreCIty = [...StoreCity]
+    NewStoreCIty[index] = value
+    console.log('123', NewStoreCIty)
+    setStoreCity(NewStoreCIty)
   }
 
   return (
@@ -72,12 +68,17 @@ function Cart_Store(props) {
             <span>*</span>請選擇縣市
           </label>
           <div className="dropdown">
-            <select name="city" id="city">
-              {StoreCity.map((v, i) => {
-                return <option value="15456454">1</option>
+            <select
+              name="city"
+              id="city"
+              onChange={(e) => {
+                console.log('選到的A', e.target.value)
+                UpdateInfo(e.target.value, 0)
+              }}
+            >
+              {CityArr.map((v, i) => {
+                return <option value={v.City}>{v.City}</option>
               })}
-              {/* <option value="1">台北市</option>
-              <option value="2">新北市</option> */}
             </select>
             <FaChevronDown className="ChevronDown position-absolute" />
           </div>
@@ -85,9 +86,21 @@ function Cart_Store(props) {
             <span>*</span>請選擇行政區
           </label>
           <div className="dropdown">
-            <select name="city" id="city">
-              <option value="1">台北市</option>
-              <option value="2">新北市</option>
+            <select
+              name="districts"
+              id="districts"
+              onChange={(e) => {
+                console.log('選到的B', e.target.value)
+                UpdateInfo(e.target.value, 1)
+              }}
+            >
+              {CityArr.map((v, i) => {
+                if (v.City === StoreCity[0]) {
+                  return v.districts.map((a) => {
+                    return <option value={a.name}>{a.name}</option>
+                  })
+                }
+              })}
             </select>
             <FaChevronDown className="ChevronDown position-absolute" />
           </div>
