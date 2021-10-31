@@ -1,25 +1,40 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import $ from 'jquery'
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  useMapEvent,
+} from 'react-leaflet'
+import markerIconPng from '../../../node_modules/leaflet/dist/images/marker-icon.png'
+import { Icon } from 'leaflet'
+import '../../../node_modules/leaflet/dist/leaflet.css'
+
 // import { MapContainer } from 'react-leaflet'
 
 // import Iframe from 'react-iframe'
 import { FaChevronDown } from 'react-icons/fa'
+import { position } from 'dom-helpers'
 
 function Cart_Store(props) {
-  const options = props.pathOptions ?? {}
-
   let { StoreInfo, setStoreInfo, CityArr, setCityArr } = props
   let [StoreCity, setStoreCity] = useState([])
   let [GetAddress, setGetAddress] = useState([])
   let [GetStoreInfo, setGetStoreInfo] = useState([])
   let [test, settest] = useState(0)
   let SearchInfo = 'SearchRoad'
+  let [GetPosition, setGetPosition] = useState([24, 121])
+  console.log('店鋪資訊', GetStoreInfo)
+
   // console.log(CityArr)
   // console.log('店名資訊', StoreCity)
   // console.log('路段資訊', GetAddress)
 
   useEffect(() => {
+    // GetCurrentPosition()
     if (StoreCity[0] && StoreCity[1]) {
       DataAxios()
     }
@@ -58,7 +73,7 @@ function Cart_Store(props) {
 
       const jqStoreInfo = $(r.data)
       jqStoreInfo.find('GeoPosition POIName').each((i, el) => {
-        console.log('路名', el.innerText)
+        // console.log('路名', el.innerText)
         GetStoreInfo[i] = { POIName: el.innerText, X: '', Y: '' }
       })
       jqStoreInfo.find('GeoPosition X').each((i, el) => {
@@ -71,15 +86,41 @@ function Cart_Store(props) {
       })
       SearchInfo = 'SearchRoad'
       console.log('路段', GetAddress)
-      console.log('店鋪資訊', GetStoreInfo)
+      setGetStoreInfo(GetStoreInfo)
     }
   }
 
   function UpdateInfo(value, index) {
     let NewStoreCIty = [...StoreCity]
     NewStoreCIty[index] = value
-    // console.log('123', NewStoreCIty)
+    console.log('123', NewStoreCIty)
     setStoreCity(NewStoreCIty)
+  }
+
+  function addMarker() {}
+
+  // function GetCurrentPosition() {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     console.log('緯度是', position.coords.latitude)
+  //     console.log('經度是', position.coords.longitude)
+  //     GetPosition[0] = position.coords.latitude
+  //     GetPosition[1] = position.coords.longitude
+  //     setGetPosition(GetPosition)
+  //   })
+  // }
+
+  function MyComponent() {
+    const map = useMap()
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log('緯度是', position.coords.latitude)
+      console.log('經度是', position.coords.longitude)
+      GetPosition[0] = position.coords.latitude
+      GetPosition[1] = position.coords.longitude
+      setGetPosition(GetPosition)
+    })
+    map.setView(GetPosition, 17)
+    console.log('map center:', map.getCenter())
+    return null
   }
 
   return (
@@ -97,7 +138,7 @@ function Cart_Store(props) {
             <h4>門市地址:{StoreCity[2]}</h4>
           </div>
         </div>
-        <form className="storeform" action="">
+        <div className="storeform" action="">
           <label for="">
             <span>*</span>請選擇縣市
           </label>
@@ -132,7 +173,6 @@ function Cart_Store(props) {
                 UpdateInfo(e.target.value, 1)
                 GetAddress = []
                 setGetAddress(GetAddress)
-
                 // SearchInfo = 'SearchStore'
                 // console.log('更改的資料', SearchInfo)
                 // DataAxios()
@@ -162,7 +202,7 @@ function Cart_Store(props) {
               }}
               onChange={(e) => {
                 GetAddress = []
-
+                GetStoreInfo = []
                 console.log('選到的C', e.target.value)
                 UpdateInfo(e.target.value, 2)
               }}
@@ -173,13 +213,40 @@ function Cart_Store(props) {
             </select>
             <FaChevronDown className="ChevronDown position-absolute" />
           </div>
-
-          {/* <Iframe
-            className="col-12 my-5"
-            url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1807.5132236306938!2d121.54191407519947!3d25.033176522941467!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd49963984b%3A0x57f2f5ed99bc208!2zNy1FTEVWRU4g6ZGr5b6p6ZaA5biC!5e0!3m2!1szh-TW!2stw!4v1634475462113!5m2!1szh-TW!2stw"
-            height="300px"
-            display="initial"
-          ></Iframe> */}
+          <div className="Map">
+            <MapContainer
+              style={{ height: '400px', width: '100%' }}
+              center={[GetPosition[0], GetPosition[1]]}
+              zoom={13}
+              scrollWheelZoom={false}
+            >
+              <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              {GetStoreInfo.map((v, i) => {
+                return (
+                  (
+                    <Marker
+                      position={[v.Y, v.X]}
+                      icon={
+                        new Icon({
+                          iconUrl: markerIconPng,
+                          iconSize: [25, 41],
+                          iconAnchor: [12, 41],
+                        })
+                      }
+                    >
+                      <Popup>
+                        {v.POIName} <br /> Easily customizable.
+                      </Popup>
+                    </Marker>
+                  ),
+                  (<MyComponent />)
+                )
+              })}
+            </MapContainer>
+          </div>
           <div className="storeinput name">
             <label for="">
               <span>*</span>姓名
@@ -223,7 +290,7 @@ function Cart_Store(props) {
               placeholder="請在此填寫，最多 200 字"
             />
           </div>
-        </form>
+        </div>
       </div>
     </>
   )
