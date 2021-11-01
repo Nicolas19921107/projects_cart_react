@@ -7,11 +7,19 @@ import {
 } from 'react-icons/fa'
 import axios from 'axios'
 
+// 你可能會喜歡的卡片
 function StoreCard(props) {
+
+  // 喜歡的 icon
   const { Likeicon, setLikeicon } = props
+
+  // 收回喜歡的 icon
   const { unLikeicon, setunLikeicon } = props
+
+  // 加入購物車的商品 id 位置
   let { addProductPos, setaddProductPos } = props
 
+  // 加入購物車的函式
   async function AddProduct(addProductPos) {
     console.log('我在這喔', addProductPos)
     let Add = await axios.post(`http://localhost:3001/cart/`, {
@@ -60,10 +68,10 @@ function StoreCard(props) {
           </div>
         </div> */}
         <div className="storecard col-lg-4 col-10 position-relative">
-          {/* <img
+          <img
             src="../../../image/otherproduct.png"
             className="position-absolute"
-          /> */}
+          />
           <div className="storeproduct">
             <div className="body py-2">
               <p className="text ps-5 text-center">冰烤地瓜</p>

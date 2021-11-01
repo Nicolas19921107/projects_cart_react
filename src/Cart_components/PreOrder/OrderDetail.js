@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import StoreCard from './StoreCard'
 import StoreCardMobile from './StoreCardMobile'
-import axios from 'axios'
-// import CartItem from './CartItem'
-// import CartMobile from './CartMobile'
 import {
   FaTrash,
   FaPlusCircle,
   FaMinusCircle,
   FaAngleDoubleRight,
 } from 'react-icons/fa'
-// import CART from '../../config'
-//示意圖
+import { icon } from 'leaflet'
 
+// 商品訂單詳細
 function OrderDetail(props) {
+  // 愛心收藏 icon
   const [Likeicon, setLikeicon] = useState('full')
+
+  // 收回愛心收藏 icon
   const [unLikeicon, setunLikeicon] = useState('heart')
   let {
     data,
@@ -27,8 +27,6 @@ function OrderDetail(props) {
     setaddProductPos,
   } = props
   let NewCount = [...Count]
-  // console.log('第二層Data展開', Pos)
-  // console.log('第二層', NewCount)
 
   return (
     <>
@@ -57,26 +55,40 @@ function OrderDetail(props) {
                       </td>
                       <td className="text-start">{v.name}</td>
                       <td className="text-start">
+                        {/* 商品數量減少 */}
                         <FaMinusCircle
                           className="countIcon"
                           onClick={() => {
+                            // 如果小於1就直接刪除
                             NewCount[i] < 2
-                              ? setDeleteODPos(v.Order_Sid)
+                              ? setDeleteODPos(v.Sid)
                               : (NewCount[i] -= 1)
+
+                            // 設定新的訂單數量
                             setCount(NewCount)
+
+                            // 指定要改變商品數量的位置
                             setPos(i)
-                            setODPos(v.Order_Sid)
+
+                            // 更新 sql 路由的訂單 ID
+                            setODPos(v.Sid)
                           }}
                         />
                         {NewCount[i]}
+                        {/* 商品數量增加 */}
                         <FaPlusCircle
                           className="countIcon"
                           onClick={() => {
                             NewCount[i] += 1
+
+                            // 設定新的訂單數量
                             setCount(NewCount)
-                            // console.log('修改count', Count)
+
+                            // 指定要改變商品數量的位置
                             setPos(i)
-                            setODPos(v.Order_Sid)
+
+                            // 更新 sql 路由的訂單 ID
+                            setODPos(v.Sid)
                           }}
                         />
                       </td>
@@ -85,43 +97,15 @@ function OrderDetail(props) {
                         <FaTrash
                           className="trashIcon"
                           onClick={() => {
-                            setDeleteODPos(v.Order_Sid)
+                            // 更新 sql 路由的訂單 ID
+                            setDeleteODPos(v.Sid)
                           }}
                         />
                       </td>
                     </tr>
                   )
                 })
-              : 'No Result'}
-
-            {/* <tr>
-              <td>
-                <img src="http://localhost:3000/image/product1.png" alt="" />
-              </td>
-              <td className="text-start">Optimum Nutrition 100% 乳清蛋白</td>
-              <td className="text-start ">- 50P</td>
-              <td className="text-start">
-                <FaMinusCircle
-                  className="countIcon"
-                  onClick={() => {
-                    // console.log(e.target)
-                    setAmountChange(AmountChange < 1 ? 0 : AmountChange - 1)
-                  }}
-                />
-                {AmountChange}
-                <FaPlusCircle
-                  className="countIcon"
-                  onClick={() => {
-                    // console.log(e.target)
-                    setAmountChange(AmountChange > 9 ? 10 : AmountChange + 1)
-                  }}
-                />
-              </td>
-              <td className="text-start">NT$2,000</td>
-              <td>
-                <FaTrash className="trashIcon" />
-              </td>
-            </tr> */}
+              : ' '}
           </tbody>
         </table>
 
@@ -131,43 +115,66 @@ function OrderDetail(props) {
           <tbody>
             {data.map
               ? data.map((v, i) => {
-                  {
-                    /* ;<CartMobile /> */
-                  }
+                  return (
+                    <tr>
+                      <td>
+                        <img
+                          src={`http://localhost:3000/image/${v.cate_sid}/${v.Product_id}.jpg`}
+                          alt=""
+                        />
+                      </td>
+                      <td className="text-start">
+                        {v.name} <br />
+                        NT${v.price}
+                      </td>
+                      <td className="text-start col-4 text-center">
+                        <FaMinusCircle
+                          className="countIcon"
+                          onClick={() => {
+                            // 如果小於1就直接刪除
+                            NewCount[i] < 2
+                              ? setDeleteODPos(v.Sid)
+                              : (NewCount[i] -= 1)
+
+                            // 設定新的訂單數量
+                            setCount(NewCount)
+
+                            // 指定要改變商品數量的位置
+                            setPos(i)
+
+                            // 更新 sql 路由的訂單 ID
+                            setODPos(v.Sid)
+                          }}
+                        />
+                        {NewCount[i]}
+                        <FaPlusCircle
+                          className="countIcon"
+                          onClick={() => {
+                            NewCount[i] += 1
+
+                            // 設定新的訂單數量
+                            setCount(NewCount)
+
+                            // 指定要改變商品數量的位置
+                            setPos(i)
+
+                            // 更新 sql 路由的訂單 ID
+                            setODPos(v.Sid)
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  )
                 })
               : ''}
-
-            {/* <tr>
-              <td>
-                <img src="../../../image/product1.png" alt="" />
-              </td>
-              <td className="text-start">
-                Optimum Nutrition 100% 乳清蛋白
-                <br />
-                NT$2,000
-              </td>
-              <td className="text-start col-4 text-center">
-                <FaMinusCircle
-                  className="countIcon"
-                  onClick={() => {
-                    // console.log(e.target)
-                  }}
-                />
-                10
-                <FaPlusCircle
-                  className="countIcon"
-                  onClick={() => {
-                    // console.log(e.target)
-                  }}
-                />
-              </td>
-            </tr> */}
           </tbody>
         </table>
 
         <div className="bottomline col-lg-9"></div>
 
+        {/* 你可能會喜歡，的 component */}
         <h4 className="col-lg-10 text-lg-start">你可能也會喜歡</h4>
+        {/* 喜歡的卡片 */}
         <StoreCard
           Likeicon={Likeicon}
           setLikeicon={setLikeicon}
