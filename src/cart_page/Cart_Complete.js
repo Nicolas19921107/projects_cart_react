@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 function Cart_Complete(props) {
+  useEffect(() => {
+    let r = axios.delete('http://localhost:3001/cart/')
+    if (r.status === 200) {
+      console.log('刪除完成')
+    }
+  }, [])
   return (
     <>
       <div className="container-fluid Banner col-xs-10">

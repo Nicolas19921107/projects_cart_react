@@ -91,7 +91,11 @@ function Cart_ConfimOrder(props) {
             <h2>以下列方式支付金額</h2>
             <h6>{DataDetail.Payment_Type}</h6>
           </div>
-          <FaCcVisa className="favisa" />
+          {DataDetail.Payment_Type === '信用卡支付' ? (
+            <FaCcVisa className="favisa" />
+          ) : (
+            ''
+          )}
         </div>
         <table className="table text-center table-borderless mx-auto">
           <thead>

@@ -62,17 +62,56 @@ function Cart_Manage(props) {
     }
   }
 
-  async function AddOrder(OrderInfo, Checkout, Invoice) {
+  async function AddOrder(OrderInfo, Checkout, Invoice, StoreInfo) {
     // console.log('寫出訂單')
-    let NewOrderInfo = [Checkout, ...OrderInfo]
-    console.log('寫出的訂購資料', NewOrderInfo)
-    if (!NewOrderInfo[7]) {
-      console.log('這邊是 undefine')
-      NewOrderInfo[7] = '無'
-      console.log('寫出的訂購資料_加入備註', NewOrderInfo)
+    let NewOrderInfo
+    console.log('CHECKOUT', Checkout)
+
+    if (Checkout === '7-11取貨付款') {
+      if (!StoreInfo[7]) {
+        console.log('第8個位置沒有值', StoreInfo)
+      }
+      NewOrderInfo = [
+        Checkout,
+        StoreInfo[4],
+        StoreInfo[5],
+        StoreInfo[6],
+        StoreInfo[3] + '-' + StoreInfo[0],
+        StoreInfo[1],
+        StoreInfo[2],
+        !StoreInfo[7] ? '無' : StoreInfo[7],
+        ...Invoice,
+      ]
+      // NewOrderInfo[1] = StoreInfo[4]
+      // NewOrderInfo[2] = StoreInfo[5]
+      // NewOrderInfo[3] = StoreInfo[6]
+      // NewOrderInfo[4] = StoreInfo[3]
+      // NewOrderInfo[5] = '-' + StoreInfo[0]
+      // NewOrderInfo[6] = StoreInfo[1] + StoreInfo[2]
     }
-    NewOrderInfo = [...NewOrderInfo, ...Invoice]
-    console.log('寫出的訂購資料_加入發票', NewOrderInfo)
+    if (Checkout === '宅配貨到付款') {
+      NewOrderInfo = [
+        Checkout,
+        OrderInfo[0],
+        OrderInfo[1],
+        OrderInfo[2],
+        OrderInfo[3],
+        OrderInfo[4],
+        OrderInfo[5],
+        OrderInfo[6],
+        ...Invoice,
+      ]
+    }
+
+    // let NewOrderInfo = [Checkout, ...OrderInfo]
+    console.log('寫出的訂購資料', NewOrderInfo)
+    // if (!NewOrderInfo[7]) {
+    //   console.log('這邊是 undefine')
+    //   NewOrderInfo[7] = '無'
+    //   console.log('寫出的訂購資料_加入備註', NewOrderInfo)
+    // }
+    // NewOrderInfo = [...NewOrderInfo, ...Invoice]
+    // console.log('寫出的訂購資料_加入發票', NewOrderInfo)
 
     // console.log('寫出的訂購資料', NewOrderInfo)
     let r = await axios.post('http://localhost:3001/cart/addList', {
@@ -89,6 +128,7 @@ function Cart_Manage(props) {
     })
     if (r.status === 200) {
       console.log('寫入 DB')
+      localStorage.removeItem('門市')
       props.history.push('/carts/ConfirmOrder')
     }
   }
@@ -170,7 +210,7 @@ function Cart_Manage(props) {
         <button
           className="confirminfo col-lg-4 col-10"
           onClick={() => {
-            AddOrder(OrderInfo, Checkout, Invoice)
+            AddOrder(OrderInfo, Checkout, Invoice, StoreInfo)
           }}
         >
           確認訂單

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import axios from 'axios'
 import $ from 'jquery'
 import {
@@ -8,6 +8,7 @@ import {
   Popup,
   useMap,
   useMapEvent,
+  Tooltip,
 } from 'react-leaflet'
 import markerIconPng from '../../../node_modules/leaflet/dist/images/marker-icon.png'
 import { Icon } from 'leaflet'
@@ -21,47 +22,56 @@ import { position } from 'dom-helpers'
 
 function Cart_Store(props) {
   let { StoreInfo, setStoreInfo, CityArr, setCityArr } = props
-  let [StoreCity, setStoreCity] = useState([])
+  // let [StoreInfo, setStoreInfo] = useState([])
   let [GetAddress, setGetAddress] = useState([])
   let [GetStoreInfo, setGetStoreInfo] = useState([])
   let [test, settest] = useState(0)
   let SearchInfo = 'SearchRoad'
-  let [GetPosition, setGetPosition] = useState([24, 121])
-  console.log('店鋪資訊', GetStoreInfo)
+  let [GetPosition, setGetPosition] = useState([25.0475613, 121.5173399])
+  let [Name, setName] = useState()
+  let [Phone, setPhone] = useState()
+  let [Email, setEmail] = useState()
+  let [Notice, setNotice] = useState()
 
   // console.log(CityArr)
-  // console.log('店名資訊', StoreCity)
+  // console.log('店名資訊', StoreInfo)
   // console.log('路段資訊', GetAddress)
 
   useEffect(() => {
     // GetCurrentPosition()
-    if (StoreCity[0] && StoreCity[1]) {
+    if (StoreInfo[0] && StoreInfo[1]) {
       DataAxios()
     }
-  }, [StoreCity, test])
+  }, [StoreInfo, test])
 
   useEffect(() => {
-    console.log('有抓到 GetAddress', GetAddress)
+    // console.log('有抓到 GetStoreInfo', GetStoreInfo)
+  }, [GetStoreInfo])
+
+  useEffect(() => {
+    localStorage.removeItem('門市')
+    localStorage.removeItem('店號')
   }, [])
 
   async function DataAxios() {
-    if (StoreCity[2]) {
+    if (StoreInfo[2]) {
       SearchInfo = 'SearchStore'
     }
-    // console.log('City', StoreCity[0])
-    // console.log('District', StoreCity[1])
+    // console.log('City', StoreInfo[0])
+    // console.log('District', StoreInfo[1])
     // console.log('更改的Data', SearchInfo)
-    console.log('SearchINfo狀態', SearchInfo)
+    // console.log('SearchINfo狀態', SearchInfo)
 
     let r = await axios.post('http://localhost:3001/cart/store', {
       commandid: SearchInfo,
-      city: StoreCity[0],
-      town: StoreCity[1],
-      roadname: StoreCity[2],
+      city: StoreInfo[0],
+      town: StoreInfo[1],
+      roadname: StoreInfo[2],
     })
     if (r.status === 200) {
       // console.log('DataX', r.data)
       const jqRoadName = $(r.data)
+      let NewGetStore = [...GetStoreInfo]
       jqRoadName.find('RoadName rd_name_1').each((i, el) => {
         // console.log('路名', el.innerText)
         GetAddress[i] = { RoadName: el.innerText }
@@ -74,52 +84,68 @@ function Cart_Store(props) {
       const jqStoreInfo = $(r.data)
       jqStoreInfo.find('GeoPosition POIName').each((i, el) => {
         // console.log('路名', el.innerText)
-        GetStoreInfo[i] = { POIName: el.innerText, X: '', Y: '' }
+        NewGetStore[i] = {
+          POIName: el.innerText + '門市',
+          X: '',
+          Y: '',
+          Address: '',
+          POIID: '',
+        }
       })
       jqStoreInfo.find('GeoPosition X').each((i, el) => {
         // console.log('路名', el.innerText)
-        GetStoreInfo[i].X = parseInt(el.innerText) * 0.000001
+        NewGetStore[i].X = parseInt(el.innerText) * 0.000001
       })
       jqStoreInfo.find('GeoPosition Y').each((i, el) => {
         // console.log('路名', el.innerText)
-        GetStoreInfo[i].Y = parseInt(el.innerText) * 0.000001
+        NewGetStore[i].Y = parseInt(el.innerText) * 0.000001
+      })
+      jqStoreInfo.find('GeoPosition Address').each((i, el) => {
+        // console.log('路名', el.innerText)
+        NewGetStore[i].Address = el.innerText
+      })
+      jqStoreInfo.find('GeoPosition POIID').each((i, el) => {
+        // console.log('POIID', el.innerText)
+        NewGetStore[i].POIID = el.innerText
       })
       SearchInfo = 'SearchRoad'
-      console.log('路段', GetAddress)
-      setGetStoreInfo(GetStoreInfo)
+      // console.log('店鋪資訊', NewGetStore)
+      // console.log('路段', GetAddress)
+      setGetStoreInfo(NewGetStore)
     }
   }
 
   function UpdateInfo(value, index) {
-    let NewStoreCIty = [...StoreCity]
-    NewStoreCIty[index] = value
-    console.log('123', NewStoreCIty)
-    setStoreCity(NewStoreCIty)
+    let NewStoreInfo = [...StoreInfo]
+    NewStoreInfo[index] = value
+    console.log('123', NewStoreInfo)
+    setStoreInfo(NewStoreInfo)
   }
-
-  function addMarker() {}
-
-  // function GetCurrentPosition() {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     console.log('緯度是', position.coords.latitude)
-  //     console.log('經度是', position.coords.longitude)
-  //     GetPosition[0] = position.coords.latitude
-  //     GetPosition[1] = position.coords.longitude
-  //     setGetPosition(GetPosition)
-  //   })
-  // }
 
   function MyComponent() {
     const map = useMap()
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log('緯度是', position.coords.latitude)
-      console.log('經度是', position.coords.longitude)
-      GetPosition[0] = position.coords.latitude
-      GetPosition[1] = position.coords.longitude
-      setGetPosition(GetPosition)
-    })
-    map.setView(GetPosition, 17)
-    console.log('map center:', map.getCenter())
+    console.log('MyCom的店舖', GetStoreInfo)
+    let NewGetPosition = [...GetPosition]
+    if (GetStoreInfo.length !== 0) {
+      let NewGetStoreInfo = [...GetStoreInfo]
+      console.log('GEOPOS', NewGetStoreInfo)
+      console.log('GEOPOSITION_X', NewGetPosition)
+      NewGetPosition[0] = NewGetStoreInfo[0].Y
+      NewGetPosition[1] = NewGetStoreInfo[0].X
+      console.log('新的位置座標', NewGetPosition)
+    } else {
+      navigator.geolocation.getCurrentPosition((position) => {
+        // console.log('緯度是', position.coords.latitude)
+        // console.log('經度是', position.coords.longitude)
+        NewGetPosition[0] = position.coords.latitude
+        NewGetPosition[1] = position.coords.longitude
+        setGetPosition(NewGetPosition)
+      })
+      console.log('map center:', map.getCenter())
+      console.log('通過')
+    }
+    map.setView(NewGetPosition, 17)
+
     return null
   }
 
@@ -131,11 +157,11 @@ function Cart_Store(props) {
             <img src="http://localhost:3000/image/711icon.png" alt="" />
           </div>
           <div className="store_711_info col-lg-5 col-10 my-auto">
-            <h4>已選擇門市店號:155083</h4>
-            <h4>已選擇門市名稱:鑫復門市</h4>
+            <h4>已選擇門市店號:{localStorage.getItem('店號')}</h4>
+            <h4>已選擇門市名稱:{!StoreInfo[3] ? '無資料' : StoreInfo[3]}</h4>
           </div>
           <div className="store_711_address col-lg-5 col-10">
-            <h4>門市地址:{StoreCity[2]}</h4>
+            <h4>門市地址:{localStorage.getItem('門市')}</h4>
           </div>
         </div>
         <div className="storeform" action="">
@@ -166,9 +192,9 @@ function Cart_Store(props) {
               id="districts"
               onChange={(e) => {
                 // console.log('選到的B', e.target.value)
-                if (StoreCity[2]) {
-                  StoreCity.splice(2, 1, '')
-                  console.log('第二層資料刪除', StoreCity)
+                if (StoreInfo[2]) {
+                  StoreInfo.splice(2, 1, '')
+                  console.log('第二層資料刪除', StoreInfo)
                 }
                 UpdateInfo(e.target.value, 1)
                 GetAddress = []
@@ -178,9 +204,9 @@ function Cart_Store(props) {
                 // DataAxios()
               }}
             >
-              {console.log('第二層', StoreCity)}
+              {console.log('第二層', StoreInfo)}
               {CityArr.map((v, i) => {
-                if (v.City === StoreCity[0]) {
+                if (v.City === StoreInfo[0]) {
                   return v.districts.map((a) => {
                     return <option value={a.name}>{a.name}</option>
                   })
@@ -198,12 +224,12 @@ function Cart_Store(props) {
               id="roadname"
               onClick={(e) => {
                 settest(test + 1)
-                console.log('測試數量', test)
+                // console.log('測試數量', test)
               }}
               onChange={(e) => {
                 GetAddress = []
                 GetStoreInfo = []
-                console.log('選到的C', e.target.value)
+                // console.log('選到的C', e.target.value)
                 UpdateInfo(e.target.value, 2)
               }}
             >
@@ -217,7 +243,7 @@ function Cart_Store(props) {
             <MapContainer
               style={{ height: '400px', width: '100%' }}
               center={[GetPosition[0], GetPosition[1]]}
-              zoom={13}
+              zoom={20}
               scrollWheelZoom={false}
             >
               <TileLayer
@@ -226,25 +252,37 @@ function Cart_Store(props) {
               />
               {GetStoreInfo.map((v, i) => {
                 return (
-                  (
-                    <Marker
-                      position={[v.Y, v.X]}
-                      icon={
-                        new Icon({
-                          iconUrl: markerIconPng,
-                          iconSize: [25, 41],
-                          iconAnchor: [12, 41],
-                        })
-                      }
-                    >
-                      <Popup>
-                        {v.POIName} <br /> Easily customizable.
-                      </Popup>
-                    </Marker>
-                  ),
-                  (<MyComponent />)
+                  <Marker
+                    position={[v.Y, v.X]}
+                    icon={
+                      new Icon({
+                        iconUrl: markerIconPng,
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                      })
+                    }
+                  >
+                    <Popup>
+                      <div className="PopCard">
+                        <p>門市店號:{v.POIID}</p>
+                        <p>門市名稱:{v.POIName}</p>
+                        <p>門市地址:{v.Address}</p>
+                        <button
+                          onClick={(e) => {
+                            console.log('已選擇', e.target.value)
+                            localStorage.setItem('店號', v.POIID)
+                            localStorage.setItem('門市', v.Address)
+                            UpdateInfo(v.POIName, 3)
+                          }}
+                        >
+                          請選擇門市
+                        </button>
+                      </div>
+                    </Popup>
+                  </Marker>
                 )
               })}
+              <MyComponent />
             </MapContainer>
           </div>
           <div className="storeinput name">
@@ -254,8 +292,11 @@ function Cart_Store(props) {
             <input
               type="text"
               className="ordername px-3"
-              name="ordername"
-              id="ordername"
+              name={Name}
+              onChange={(e) => {
+                setName(e.target.value)
+                UpdateInfo(e.target.value, 4)
+              }}
             />
           </div>
           <div className="storeinput phone">
@@ -265,8 +306,12 @@ function Cart_Store(props) {
             <input
               type="text"
               className="ordername px-3"
-              name="ordername"
-              id="ordername"
+              name={Phone}
+              id="Phone"
+              onChange={(e) => {
+                setPhone(e.target.value)
+                UpdateInfo(e.target.value, 5)
+              }}
             />
           </div>
           <div className="storeinput email">
@@ -276,8 +321,12 @@ function Cart_Store(props) {
             <input
               type="text"
               className="emailname px-3"
-              name="emailname"
-              id="emailname"
+              name={Email}
+              id="Email"
+              onChange={(e) => {
+                setEmail(e.target.value)
+                UpdateInfo(e.target.value, 6)
+              }}
             />
           </div>
           <div className="storeinput notice">
@@ -285,9 +334,13 @@ function Cart_Store(props) {
             <input
               type="text"
               className="noticename px-3"
-              name="noticename"
-              id="noticename"
+              name={Notice}
+              id="Notice"
               placeholder="請在此填寫，最多 200 字"
+              onChange={(e) => {
+                setNotice(e.target.value)
+                UpdateInfo(e.target.value, 7)
+              }}
             />
           </div>
         </div>
